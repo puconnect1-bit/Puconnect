@@ -1,0 +1,469 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <meta name="theme-color" content="#0d0e11" id="themeColorMeta"/>
+  <title>Help Centre — PU-Connect</title>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="{% static 'Base_app/css/help.css' %}">
+</head>
+<body>
+
+/* NAV */
+{% include 'base/nav_b.html' %}
+
+<!-- HERO + SEARCH -->
+<header class="hero">
+  <div class="hero-glow"></div>
+  <div class="hero-badge">Help Centre</div>
+  <h1>How Can We <em>Help You?</em></h1>
+  <p class="hero-sub">Search our knowledge base or browse common topics below. Most questions are answered in under a minute.</p>
+  <div class="search-wrap">
+    <span class="search-icon">🔍</span>
+    <input class="search-input" id="searchInput" type="text" placeholder="Search e.g. 'reset password', 'refund', 'listing'…" autocomplete="off" oninput="handleSearch(this.value)" onfocus="handleSearch(this.value)"/>
+    <div class="search-results" id="searchResults"></div>
+  </div>
+</header>
+
+<!-- QUICK TOPICS -->
+<div class="quick-topics">
+  <div class="qt-title">Browse by Topic</div>
+  <div class="qt-sub">Jump straight to the section you need.</div>
+  <div class="topics-grid">
+    <a href="#getting-started" class="topic-card">
+      <span class="topic-icon">🚀</span>
+      <div class="topic-title">Getting Started</div>
+      <div class="topic-count">8 articles</div>
+      <div class="topic-arrow"><span>Read more →</span></div>
+    </a>
+    <a href="#account" class="topic-card">
+      <span class="topic-icon">👤</span>
+      <div class="topic-title">Account & Profile</div>
+      <div class="topic-count">10 articles</div>
+      <div class="topic-arrow"><span>Read more →</span></div>
+    </a>
+    <a href="#listings" class="topic-card">
+      <span class="topic-icon">🏷️</span>
+      <div class="topic-title">Listings & Selling</div>
+      <div class="topic-count">12 articles</div>
+      <div class="topic-arrow"><span>Read more →</span></div>
+    </a>
+    <a href="#buying" class="topic-card">
+      <span class="topic-icon">🛒</span>
+      <div class="topic-title">Buying & Offers</div>
+      <div class="topic-count">9 articles</div>
+      <div class="topic-arrow"><span>Read more →</span></div>
+    </a>
+    <a href="#payments" class="topic-card">
+      <span class="topic-icon">💳</span>
+      <div class="topic-title">Payments & Escrow</div>
+      <div class="topic-count">11 articles</div>
+      <div class="topic-arrow"><span>Read more →</span></div>
+    </a>
+    <a href="#safety-faq" class="topic-card">
+      <span class="topic-icon">🛡️</span>
+      <div class="topic-title">Safety & Disputes</div>
+      <div class="topic-count">7 articles</div>
+      <div class="topic-arrow"><span>Read more →</span></div>
+    </a>
+  </div>
+</div>
+
+<!-- HELP LAYOUT -->
+<div class="help-layout">
+  <!-- SIDEBAR -->
+  <aside class="help-sidebar">
+    <div class="sidebar-title">Contents</div>
+    <ul class="sidebar-list" id="sidebar-list">
+      <li><a href="#getting-started">🚀 Getting Started</a></li>
+      <li><a href="#account">👤 Account & Profile</a></li>
+      <li><a href="#listings">🏷️ Listings & Selling</a></li>
+      <li><a href="#buying">🛒 Buying & Offers</a></li>
+      <li><a href="#payments">💳 Payments & Escrow</a></li>
+      <li><a href="#safety-faq">🛡️ Safety & Disputes</a></li>
+    </ul>
+    <div class="sidebar-divider"></div>
+    <ul class="sidebar-list">
+      <li><a href="{% url 'base:safety' %}">Safety Guide →</a></li>
+      <li><a href="{% url 'base:terms' %}">Terms & Conditions →</a></li>
+      <li><a href="{% url 'base:privacy' %}">Privacy Policy →</a></li>
+    </ul>
+  </aside>
+
+  <!-- FAQ MAIN -->
+  <main id="faq-main">
+
+    <!-- GETTING STARTED -->
+    <div class="faq-section" id="getting-started">
+      <div class="faq-section-title"><span class="faq-section-icon">🚀</span> Getting Started</div>
+      <div class="accordion">
+        <div class="acc-item">
+          <button class="acc-trigger" onclick="toggleAcc(this)">
+            <span class="acc-question">What is PU-Connect?</span>
+            <span class="acc-chevron">▼</span>
+          </button>
+          <div class="acc-body"><div class="acc-content">PU-Connect is a campus-only peer-to-peer marketplace built exclusively for Pentecost University students. It allows verified students to buy, sell, and trade textbooks, electronics, services, and more — safely, within the campus community.</div></div>
+        </div>
+        <div class="acc-item">
+          <button class="acc-trigger" onclick="toggleAcc(this)">
+            <span class="acc-question">Who can use PU-Connect?</span>
+            <span class="acc-chevron">▼</span>
+          </button>
+          <div class="acc-body"><div class="acc-content">PU-Connect is available to all currently enrolled students, faculty, and accredited staff of the university. You must be 13 or older and must register with a valid email address. All accounts are verified before trading begins.</div></div>
+        </div>
+        <div class="acc-item">
+          <button class="acc-trigger" onclick="toggleAcc(this)">
+            <span class="acc-question">How do I create an account?</span>
+            <span class="acc-chevron">▼</span>
+          </button>
+          <div class="acc-body"><div class="acc-content">Visit <a href="{% url 'auth:auth_view' %}#signup">our sign-up page</a> and fill in your name, email address, username, and password — or continue quickly with Google or Apple. Once registered, you'll receive a verification email. Click the link inside to activate your account and start trading.</div></div>
+        </div>
+        <div class="acc-item">
+          <button class="acc-trigger" onclick="toggleAcc(this)">
+            <span class="acc-question">Is PU-Connect free to use?</span>
+            <span class="acc-chevron">▼</span>
+          </button>
+          <div class="acc-body"><div class="acc-content">Yes — signing up and listing items is completely <strong>free</strong> for all campus users. We may introduce optional premium features in the future, and we'll always notify users at least 30 days in advance of any fee changes.</div></div>
+        </div>
+        <div class="acc-item">
+          <button class="acc-trigger" onclick="toggleAcc(this)">
+            <span class="acc-question">Can I use PU-Connect on mobile?</span>
+            <span class="acc-chevron">▼</span>
+          </button>
+          <div class="acc-body"><div class="acc-content">Absolutely. PU-Connect is fully responsive and works seamlessly on all smartphones and tablets through your mobile browser. A dedicated mobile app is on our roadmap and will be announced when available.</div></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ACCOUNT -->
+    <div class="faq-section" id="account">
+      <div class="faq-section-title"><span class="faq-section-icon">👤</span> Account &amp; Profile</div>
+      <div class="accordion">
+        <div class="acc-item">
+          <button class="acc-trigger" onclick="toggleAcc(this)">
+            <span class="acc-question">How do I reset my password?</span>
+            <span class="acc-chevron">▼</span>
+          </button>
+          <div class="acc-body"><div class="acc-content">On the <a href="{% url 'auth:auth_view' %}">login page</a>, click <strong>"Forgot password?"</strong> below the password field. Enter your registered email address and we'll send you a secure reset link within a few minutes. Check your spam folder if it doesn't arrive. The reset link expires after 24 hours.</div></div>
+        </div>
+        <div class="acc-item">
+          <button class="acc-trigger" onclick="toggleAcc(this)">
+            <span class="acc-question">How do I change my username or email?</span>
+            <span class="acc-chevron">▼</span>
+          </button>
+          <div class="acc-body"><div class="acc-content">Go to <strong>Account Settings → Profile</strong> to update your username. Username changes are allowed once every 30 days. To change your email address, go to <strong>Account Settings → Security</strong> — you'll need to verify the new email address before the change takes effect.</div></div>
+        </div>
+        <div class="acc-item">
+          <button class="acc-trigger" onclick="toggleAcc(this)">
+            <span class="acc-question">How do I delete my account?</span>
+            <span class="acc-chevron">▼</span>
+          </button>
+          <div class="acc-body"><div class="acc-content">You can delete your account from <strong>Account Settings → Privacy → Delete Account</strong>. All your listings will be removed and your personal data will be anonymised within 90 days, in line with our <a href="{% url 'base:privacy' %}">Privacy Policy</a>. Note: active transactions must be completed or cancelled before deletion.</div></div>
+        </div>
+        <div class="acc-item">
+          <button class="acc-trigger" onclick="toggleAcc(this)">
+            <span class="acc-question">Can I have more than one account?</span>
+            <span class="acc-chevron">▼</span>
+          </button>
+          <div class="acc-body"><div class="acc-content">No. Each person may only hold <strong>one active account</strong> at a time. Multiple accounts are a violation of our Terms of Service and may result in all accounts being suspended. If you've lost access to your account, please contact our support team.</div></div>
+        </div>
+        <div class="acc-item">
+          <button class="acc-trigger" onclick="toggleAcc(this)">
+            <span class="acc-question">My account was suspended. What do I do?</span>
+            <span class="acc-chevron">▼</span>
+          </button>
+          <div class="acc-body"><div class="acc-content">If your account was suspended, you should receive an email explaining the reason. If you believe the suspension was in error, you can appeal by emailing <a href="mailto:appeals@pu-Connect.edu.gh">appeals@pu-Connect.edu.gh</a> with your username and a brief description. We aim to review all appeals within 5 business days.</div></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- LISTINGS -->
+    <div class="faq-section" id="listings">
+      <div class="faq-section-title"><span class="faq-section-icon">🏷️</span> Listings &amp; Selling</div>
+      <div class="accordion">
+        <div class="acc-item">
+          <button class="acc-trigger" onclick="toggleAcc(this)">
+            <span class="acc-question">How do I post a listing?</span>
+            <span class="acc-chevron">▼</span>
+          </button>
+          <div class="acc-body"><div class="acc-content">After logging in, tap <strong>"+ Post Listing"</strong> from your dashboard. Add a title, description, category, price, and at least one clear photo. Your listing goes live immediately after submission. The whole process takes under 2 minutes.</div></div>
+        </div>
+        <div class="acc-item">
+          <button class="acc-trigger" onclick="toggleAcc(this)">
+            <span class="acc-question">What can I sell on PU-Marketplace?</span>
+            <span class="acc-chevron">▼</span>
+          </button>
+          <div class="acc-body"><div class="acc-content">You can sell any legal item or service relevant to campus life, including:
+            <ul>
+              <li>Textbooks, lecture notes, and study materials</li>
+              <li>Electronics — laptops, calculators, phones</li>
+              <li>Furniture and hostel essentials</li>
+              <li>Fashion and clothing</li>
+              <li>Campus services — tutoring, design, printing, delivery</li>
+              <li>Food and snacks (packaged goods only)</li>
+            </ul>
+            Items that are illegal, stolen, counterfeit, or adult in nature are strictly prohibited. See our <a href="{% url 'base:terms' %}">Terms of Service</a> for the full list.
+          </div></div>
+        </div>
+        <div class="acc-item">
+          <button class="acc-trigger" onclick="toggleAcc(this)">
+            <span class="acc-question">How many listings can I have at once?</span>
+            <span class="acc-chevron">▼</span>
+          </button>
+          <div class="acc-body"><div class="acc-content">Free accounts can have up to <strong>20 active listings</strong> at any one time. If you need more, please contact us — we're happy to accommodate active community sellers.</div></div>
+        </div>
+        <div class="acc-item">
+          <button class="acc-trigger" onclick="toggleAcc(this)">
+            <span class="acc-question">How do I mark an item as sold?</span>
+            <span class="acc-chevron">▼</span>
+          </button>
+          <div class="acc-body"><div class="acc-content">Go to <strong>My Listings</strong>, find the item, and tap <strong>"Mark as Sold"</strong>. The listing will be removed from public search immediately. Please do this promptly after a transaction to maintain a good seller reputation.</div></div>
+        </div>
+        <div class="acc-item">
+          <button class="acc-trigger" onclick="toggleAcc(this)">
+            <span class="acc-question">Why was my listing removed?</span>
+            <span class="acc-chevron">▼</span>
+          </button>
+          <div class="acc-body"><div class="acc-content">Listings are removed if they violate our <a href="{% url 'base:terms' %}">Terms of Service</a> — for example, prohibited items, misleading descriptions, or duplicate listings. You'll receive a notification explaining the reason. If you believe the removal was an error, email <a href="mailto:support@pentvarsconnect.com">support@pentvarsconnect.com</a>.</div></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- BUYING -->
+    <div class="faq-section" id="buying">
+      <div class="faq-section-title"><span class="faq-section-icon">🛒</span> Buying &amp; Offers</div>
+      <div class="accordion">
+        <div class="acc-item">
+          <button class="acc-trigger" onclick="toggleAcc(this)">
+            <span class="acc-question">How do I contact a seller?</span>
+            <span class="acc-chevron">▼</span>
+          </button>
+          <div class="acc-body"><div class="acc-content">On any listing page, tap <strong>"Message Seller"</strong>. This opens a secure in-app chat — please keep all communication on platform. You can ask questions, negotiate price, and arrange a meetup, all within the chat.</div></div>
+        </div>
+        <div class="acc-item">
+          <button class="acc-trigger" onclick="toggleAcc(this)">
+            <span class="acc-question">Can I make an offer below the listed price?</span>
+            <span class="acc-chevron">▼</span>
+          </button>
+          <div class="acc-body"><div class="acc-content">Yes! Many sellers are open to negotiation. Use the in-app chat to make a polite offer. Some listings are marked <strong>"Fixed Price"</strong> — in those cases, the seller has indicated the price is not negotiable.</div></div>
+        </div>
+        <div class="acc-item">
+          <button class="acc-trigger" onclick="toggleAcc(this)">
+            <span class="acc-question">What if the item isn't as described?</span>
+            <span class="acc-chevron">▼</span>
+          </button>
+          <div class="acc-body"><div class="acc-content">If an item significantly differs from its description and you used our escrow payment system, <strong>do not confirm receipt</strong> — funds won't be released to the seller until you do. Contact us at <a href="mailto:support@pentvarsconnect.com">support@pentvarsconnect.com</a> within 24 hours of the meetup to open a dispute.</div></div>
+        </div>
+        <div class="acc-item">
+          <button class="acc-trigger" onclick="toggleAcc(this)">
+            <span class="acc-question">A seller isn't responding. What should I do?</span>
+            <span class="acc-chevron">▼</span>
+          </button>
+          <div class="acc-body"><div class="acc-content">Give sellers up to <strong>48 hours</strong> to respond — they may be in lectures or exams. If after 48 hours there's no response, you can report the listing as inactive and explore other listings for the same item.</div></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- PAYMENTS -->
+    <div class="faq-section" id="payments">
+      <div class="faq-section-title"><span class="faq-section-icon">💳</span> Payments &amp; Escrow</div>
+      <div class="accordion">
+        <div class="acc-item">
+          <button class="acc-trigger" onclick="toggleAcc(this)">
+            <span class="acc-question">What payment methods are accepted?</span>
+            <span class="acc-chevron">▼</span>
+          </button>
+          <div class="acc-body"><div class="acc-content">PU-Connect supports <strong>Mobile Money (MTN, Vodafone, AirtelTigo)</strong> and our in-platform <strong>escrow system</strong>. For small-value in-person trades, cash is also acceptable. We strongly recommend using escrow for any transaction above GH₵ 50.</div></div>
+        </div>
+        <div class="acc-item">
+          <button class="acc-trigger" onclick="toggleAcc(this)">
+            <span class="acc-question">How does the escrow system work?</span>
+            <span class="acc-chevron">▼</span>
+          </button>
+          <div class="acc-body"><div class="acc-content">When you use escrow:<br><br>
+            <strong>1.</strong> Buyer sends payment → funds are held securely by PU-Connect.<br>
+            <strong>2.</strong> Buyer and seller meet on campus to complete the exchange.<br>
+            <strong>3.</strong> Buyer confirms receipt in the app → funds are released to the seller.<br><br>
+            If the buyer doesn't confirm within 48 hours of the agreed meetup time, funds are released automatically. If a dispute is raised, our team reviews and decides within 3 business days.
+          </div></div>
+        </div>
+        <div class="acc-item">
+          <button class="acc-trigger" onclick="toggleAcc(this)">
+            <span class="acc-question">Can I get a refund?</span>
+            <span class="acc-chevron">▼</span>
+          </button>
+          <div class="acc-body"><div class="acc-content">Refunds are available if:<br>
+            <ul>
+              <li>You used escrow and raised a dispute before confirming receipt</li>
+              <li>The seller cancelled the transaction</li>
+              <li>The item was proven to be significantly not as described</li>
+            </ul>
+            Cash transactions between users are not covered by our refund policy. Always use escrow for protection. Contact <a href="mailto:support@pentvarsconnect.com">support@pentvarsconnect.com</a> to initiate a refund claim.
+          </div></div>
+        </div>
+        <div class="acc-item">
+          <button class="acc-trigger" onclick="toggleAcc(this)">
+            <span class="acc-question">How long does it take to receive payment as a seller?</span>
+            <span class="acc-chevron">▼</span>
+          </button>
+          <div class="acc-body"><div class="acc-content">Once the buyer confirms receipt, funds are transferred to your Mobile Money wallet within <strong>24 hours</strong> on business days. Bank transfers, where applicable, may take up to 3 business days.</div></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- SAFETY FAQ -->
+    <div class="faq-section" id="safety-faq">
+      <div class="faq-section-title"><span class="faq-section-icon">🛡️</span> Safety &amp; Disputes</div>
+      <div class="accordion">
+        <div class="acc-item">
+          <button class="acc-trigger" onclick="toggleAcc(this)">
+            <span class="acc-question">How do I report a user or listing?</span>
+            <span class="acc-chevron">▼</span>
+          </button>
+          <div class="acc-body"><div class="acc-content">Tap the <strong>⋯ More</strong> menu on any listing or user profile and select <strong>"Report"</strong>. Choose the reason (fraud, prohibited item, harassment, etc.), add details, and submit. Our safety team reviews all reports within 2 hours. You can also email <a href="mailto:support@pentvarsconnect.com">support@pentvarsconnect.com</a> directly.</div></div>
+        </div>
+        <div class="acc-item">
+          <button class="acc-trigger" onclick="toggleAcc(this)">
+            <span class="acc-question">I think I've been scammed. What do I do?</span>
+            <span class="acc-chevron">▼</span>
+          </button>
+          <div class="acc-body"><div class="acc-content">
+            <strong>Act immediately:</strong><br>
+            1. Do NOT release escrow payment if you haven't already.<br>
+            2. Document everything — screenshots of messages, listings, and any receipts.<br>
+            3. Report the user through the app (⋯ More → Report).<br>
+            4. Email <a href="mailto:support@pentvarsconnect.com">support@pentvarsconnect.com</a> with your evidence.<br>
+            5. If you've suffered financial loss or feel unsafe, contact campus security.<br><br>
+            We take fraud extremely seriously and will act on all substantiated reports.
+          </div></div>
+        </div>
+        <div class="acc-item">
+          <button class="acc-trigger" onclick="toggleAcc(this)">
+            <span class="acc-question">How do I open a dispute?</span>
+            <span class="acc-chevron">▼</span>
+          </button>
+          <div class="acc-body"><div class="acc-content">To open a dispute on an escrow transaction, go to the transaction in your <strong>Order History</strong>, tap <strong>"Open Dispute"</strong>, and describe the issue. You must raise a dispute <strong>within 24 hours</strong> of the agreed meetup time. Our team will review and respond within 3 business days.</div></div>
+        </div>
+        <div class="acc-item">
+          <button class="acc-trigger" onclick="toggleAcc(this)">
+            <span class="acc-question">Can I block another user?</span>
+            <span class="acc-chevron">▼</span>
+          </button>
+          <div class="acc-body"><div class="acc-content">Yes. Go to the user's profile page and tap <strong>"Block User"</strong>. Blocking prevents them from messaging you, viewing your listings, or seeing your profile. Blocking does not notify the user. You can manage your block list in <strong>Account Settings → Privacy</strong>.</div></div>
+        </div>
+      </div>
+    </div>
+
+  </main>
+</div>
+
+<!-- CONTACT -->
+<section class="contact-section">
+  <div class="contact-inner">
+    <div class="eyebrow-label">Still Need Help?</div>
+    <h2 class="block-title">Get in Touch with Our Team</h2>
+    <p class="block-sub">Can't find what you're looking for? Our support team is here Monday to Friday, 8am – 5pm GMT.</p>
+    <div class="contact-grid">
+      <a href="mailto:support@pentvarsconnect.com" class="contact-card">
+        <span class="cc-icon">📧</span>
+        <div class="cc-title">Email Support</div>
+        <p class="cc-desc">Send us a message and we'll get back to you within 24 hours on business days.</p>
+        <div class="cc-action">support@pentvarsconnect.com →</div>
+      </a>
+      <a href="mailto:support@pentvarsconnect.com" class="contact-card">
+        <span class="cc-icon">🚨</span>
+        <div class="cc-title">Safety Team</div>
+        <p class="cc-desc">Report fraud, harassment, or safety concerns. We respond within 2 hours.</p>
+        <div class="cc-action">support@pentvarsconnect.com →</div>
+      </a>
+      <a href="{% url 'base:safety' %}" class="contact-card">
+        <span class="cc-icon">🛡️</span>
+        <div class="cc-title">Safety Guide</div>
+        <p class="cc-desc">Read our full safety guide for tips on safe trading and what to watch out for.</p>
+        <div class="cc-action">Read Safety Guide →</div>
+      </a>
+    </div>
+  </div>
+</section>
+
+//FOOTER
+{% include 'base/footer.html' %}
+
+<script>
+  // Accordion
+  function toggleAcc(btn) {
+    const item = btn.closest('.acc-item');
+    const isOpen = item.classList.contains('open');
+    // Close all
+    document.querySelectorAll('.acc-item.open').forEach(i => i.classList.remove('open'));
+    if (!isOpen) item.classList.add('open');
+  }
+
+  // Sidebar active
+  const faqSections = document.querySelectorAll('.faq-section[id]');
+  const sideLinks = document.querySelectorAll('.sidebar-list a');
+  const sideObs = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        sideLinks.forEach(l => l.classList.remove('active'));
+        const a = document.querySelector(`.sidebar-list a[href="#${e.target.id}"]`);
+        if (a) a.classList.add('active');
+      }
+    });
+  }, { rootMargin: '-20% 0px -65% 0px' });
+  faqSections.forEach(s => sideObs.observe(s));
+
+  // Search
+  const allFAQs = [];
+  document.querySelectorAll('.acc-item').forEach(item => {
+    const q = item.querySelector('.acc-question').textContent;
+    const a = item.querySelector('.acc-content').textContent;
+    const section = item.closest('.faq-section');
+    const sectionId = section ? section.id : '';
+    const sectionTitle = section ? section.querySelector('.faq-section-title').textContent.trim() : '';
+    allFAQs.push({ q, a, sectionId, sectionTitle });
+  });
+
+  function handleSearch(val) {
+    const resultsEl = document.getElementById('searchResults');
+    if (!val || val.length < 2) { resultsEl.classList.remove('show'); return; }
+    const lower = val.toLowerCase();
+    const matches = allFAQs.filter(f => f.q.toLowerCase().includes(lower) || f.a.toLowerCase().includes(lower)).slice(0, 6);
+    if (!matches.length) { resultsEl.innerHTML = '<div class="search-result-item"><span class="sri-icon">🤷</span><span class="sri-text">No results found. Try different keywords.</span></div>'; resultsEl.classList.add('show'); return; }
+    resultsEl.innerHTML = matches.map(m => `<div class="search-result-item" onclick="goToSection('${m.sectionId}','${m.q}')"><span class="sri-icon">❓</span><div class="sri-text"><strong>${m.q}</strong><br>${m.sectionTitle}</div></div>`).join('');
+    resultsEl.classList.add('show');
+  }
+
+  function goToSection(id, question) {
+    document.getElementById('searchResults').classList.remove('show');
+    document.getElementById('searchInput').value = '';
+    const section = document.getElementById(id);
+    if (!section) return;
+    section.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    // Open matching accordion
+    setTimeout(() => {
+      section.querySelectorAll('.acc-question').forEach(q => {
+        if (q.textContent === question) {
+          const item = q.closest('.acc-item');
+          document.querySelectorAll('.acc-item.open').forEach(i => i.classList.remove('open'));
+          item.classList.add('open');
+        }
+      });
+    }, 500);
+  }
+
+  // Close search on outside click
+  document.addEventListener('click', (e) => {
+    if (!e.target.closest('.search-wrap')) document.getElementById('searchResults').classList.remove('show');
+  });
+</script>
+<script>
+const _html=document.documentElement,_tb=document.getElementById('themeBtn');let _dark=true;
+function setTheme(d){_html.setAttribute('data-theme',d?'dark':'light');if(_tb)_tb.textContent=d?'🌞':'🌙';_dark=d;localStorage.setItem('pu-theme',d?'dark':'light');const tm=document.getElementById('themeColorMeta');if(tm)tm.setAttribute('content',d?'#0d0e11':'#f0ede8');}
+const _sv=localStorage.getItem('pu-theme');if(_sv)setTheme(_sv==='dark');else setTheme(true);
+if(_tb)_tb.addEventListener('click',()=>setTheme(!_dark));
+</script>
+</body>
+</html>

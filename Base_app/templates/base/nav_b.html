@@ -1,0 +1,10 @@
+<nav>
+  <a href="{% url 'base:home' %}" class="logo">PU-<span>Connect</span></a>
+  <ul class="nav-links">
+    <li><a href="{% url 'base:safety' %}">Safety</a></li>
+    <li><a href="{% url 'base:help' %}">Help Centre</a></li>
+    <li><a href="{% url 'base:terms' %}">Terms</a></li>
+    <li><button class="nav-theme-btn" id="themeBtn">🌞</button></li>
+    <li><a href="{% url 'auth:auth_view' %}" class="nav-cta">Get Started</a></li>
+  </ul>
+</nav>

@@ -1,0 +1,78 @@
+<!-- Reusable Listing Card Component -->
+<script>
+/**
+ * Renders a single listing card HTML.
+ * Matches the design and logic of the main dashboard.
+ */
+function listingCardHTML(l) {
+  const isSvc   = l.type === 'service' || l.listing_type === 'service';
+  const typeClr = isSvc ? '#5be5c5' : 'var(--a)';
+  const typeBg  = isSvc ? 'rgba(91,229,197,.14)' : 'rgba(232,201,106,.14)';
+  const price   = l.contactForPrice ? 'Contact'
+    : (l.priceLabel || (l.price != null ? 'GH₵ ' + Number(l.price).toLocaleString() : ''));
+  const isSaved  = isSavedInWishlist(l.id);
+  const catLabel = l.category || l.cat || (isSvc ? 'Service' : 'Product');
+  const isSold   = l.status === 'sold';
+  
+  const titleSafe = String(l.title||l.name||'Untitled').substring(0,36).replace(/</g,'&lt;').replace(/>/g,'&gt;');
+  const sellerSafe = String(l.sellerUsername||l.seller||'anon').replace(/</g,'&lt;');
+  const idSafe   = String(l.id||'').replace(/'/g,'');
+
+  // Highlight matches if search state exists
+  const displayTitle = typeof highlightQuery === 'function' ? highlightQuery(titleSafe) : titleSafe;
+
+  var imgHTML = (l.img || l.image_url)
+    ? `<img src="${l.img || l.image_url}" alt="" loading="lazy" style="width:100%;height:100%;object-fit:cover"/>`
+    : `<div style="width:100%;height:100%;display:flex;align-items:center;justify-content:center;font-size:2.4rem;background:var(--inp)">${isSvc?'🛠️':'📦'}</div>`;
+
+  var soldHTML = isSold
+    ? '<div style="position:absolute;inset:0;background:rgba(0,0,0,.52);display:flex;align-items:center;justify-content:center;color:#fff;font-size:.75rem;font-weight:700;letter-spacing:.5px">SOLD</div>'
+    : '';
+
+  return `<div class="lc" data-name="${titleSafe}" data-type="${isSvc?'service':'product'}" onclick="openListingDetail('${idSafe}')">`
+    + `<div class="lcm">`
+    + imgHTML
+    + `<span class="lbg" style="background:${typeBg};color:${typeClr}">${catLabel}</span>`
+    + soldHTML
+    + `</div>`
+    + `<div class="lbd">`
+    + `<div class="lnm">${displayTitle}</div>`
+    + `<div class="lpr">${price}</div>`
+    + `<div class="lrw">`
+    + `<span class="lsl">@${sellerSafe}</span>`
+    + `<button class="lfv" onclick="event.stopPropagation(); toggleWishlist('${idSafe}', this)">${isSaved?'❤️':'🤍'}</button>`
+    + `</div>`
+    + `</div>`
+    + `</div>`;
+}
+
+/**
+ * Wishlist helpers
+ */
+function isSavedInWishlist(id) {
+  const saved = JSON.parse(localStorage.getItem('pu-wish-ids') || '[]');
+  return saved.includes(String(id));
+}
+
+function toggleWishlist(id, btn) {
+  let saved = JSON.parse(localStorage.getItem('pu-wish-ids') || '[]');
+  id = String(id);
+  if (saved.includes(id)) {
+    saved = saved.filter(i => i !== id);
+    if (btn) btn.textContent = '🤍';
+  } else {
+    saved.push(id);
+    if (btn) btn.textContent = '❤️';
+  }
+  localStorage.setItem('pu-wish-ids', JSON.stringify(saved));
+}
+
+/**
+ * Navigation helper
+ */
+function openListingDetail(id) {
+  // Store the ID and navigate to dashboard which will handle opening the detail sheet
+  localStorage.setItem('pu-open-listing', id);
+  window.location.href = "{% url 'Dash_app:dashboard' %}";
+}
+</script>

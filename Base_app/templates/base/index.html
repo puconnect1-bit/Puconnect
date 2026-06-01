@@ -1,0 +1,313 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <a href="{% url 'base:home' %}" class="logo">PU-<span>Connect</span></a>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <meta name="theme-color" content="#0d0e11" id="themeColorMeta"/>
+  <title>PU-Connect — Campus Commerce, Reimagined</title>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="{% static "Base_app/css/index.css" %}">
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <a href="{% url 'base:home' %}" class="logo">PU-<span>Connect</span></a>
+  <ul>
+    <li><a href="#features">Features</a></li>
+    <li><a href="#how">How it Works</a></li>
+    <li><a href="{% url 'Dash_app:dashboard' %}">Browse</a></li>
+    <li><a href="{% url 'auth:auth_view' %}" class="nav-cta">Get Started</a></li>
+  </ul>
+  <button class="idx-theme" id="idxTheme">🌞</button>
+  <button class="hamburger" id="hamburger" aria-label="Menu">
+    <span></span><span></span><span></span>
+  </button>
+</nav>
+
+<!-- Mobile Menu -->
+<div class="mobile-menu" id="mobileMenu">
+  <a href="#features">Features</a>
+  <a href="#how">How it Works</a>
+  <a href="{% url 'Dash_app:dashboard' %}">Browse</a>
+  <a href="{% url 'auth:auth_view' %}#signup">Get Started →</a>
+</div>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-glow"></div>
+  <div class="hero-glow2"></div>
+  <div class="hero-inner">
+    <div class="hero-text">
+      <div class="hero-badge">
+        <span class="dot"></span>
+        Exclusively for PU Students
+      </div>
+      <h1>Your Campus.<br>Your <em>Marketplace.</em></h1>
+      <p class="hero-desc">
+        PU-Connect is the go-to platform for Pentecost University students to buy, sell, and trade — textbooks, electronics, services, and more. Safe, local, and built for campus life.
+      </p>
+      <div class="hero-actions">
+        <a href="{% url 'auth:auth_view' %}#signup" class="btn-primary">Start Selling ↗</a>
+        <a href="#features" class="btn-ghost">Explore Features</a>
+      </div>
+    </div>
+
+    <div class="hero-visual">
+      <div class="hero-card-stack">
+
+        <div class="product-card pc1" id="idx-card-0"></div>
+        <div class="product-card pc2" id="idx-card-1"></div>
+        <div class="product-card pc3" id="idx-card-2"></div>
+        <div class="product-card pc4" id="idx-card-3"></div>
+
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- STATS -->
+<section class="stats">
+  <div class="stats-inner">
+    <div class="stat-item reveal">
+      <span class="stat-num">5K+</span>
+      <div class="stat-label">Registered Students</div>
+    </div>
+    <div class="stat-item reveal">
+      <span class="stat-num">1K+</span>
+      <div class="stat-label">Listings Posted</div>
+    </div>
+    <div class="stat-item reveal">
+      <span class="stat-num">98%</span>
+      <div class="stat-label">Safe Transactions</div>
+    </div>
+    <div class="stat-item reveal">
+      <span class="stat-num">5</span>
+      <div class="stat-label">Campus Faculties Served</div>
+    </div>
+  </div>
+</section>
+
+<!-- FEATURES -->
+<section class="features" id="features">
+  <div class="section-header reveal">
+    <div class="section-eyebrow">Why PU-Connect</div>
+    <div class="section-title">Built for Students,<br>by Students</div>
+    <p class="section-sub">Everything you need to trade within your university community — secure, simple, and student-first.</p>
+  </div>
+  <div class="features-grid">
+    <div class="feature-card reveal">
+      <div class="feat-icon">🛡️</div>
+      <div class="feat-title">Student-Verified Users</div>
+      <p class="feat-desc">Every seller and buyer is verified with a university email address — no strangers, only fellow students you can trust.</p>
+    </div>
+    <div class="feature-card reveal">
+      <div class="feat-icon teal">📍</div>
+      <div class="feat-title">Campus-Only Listings</div>
+      <p class="feat-desc">All listings are tied to your campus location. Arrange safe, convenient meetups at well-known spots on campus.</p>
+    </div>
+    <div class="feature-card reveal">
+      <div class="feat-icon">💬</div>
+      <div class="feat-title">In-App Messaging</div>
+      <p class="feat-desc">Chat directly with buyers or sellers without ever sharing personal contact details. Stay private, stay safe.</p>
+    </div>
+    <div class="feature-card reveal">
+      <div class="feat-icon teal">💳</div>
+      <div class="feat-title">Secure Payments</div>
+      <p class="feat-desc">Pay securely through Mobile Money or our escrow system. Funds are only released when both parties confirm the deal.</p>
+    </div>
+    <div class="feature-card reveal">
+      <div class="feat-icon">⭐</div>
+      <div class="feat-title">Ratings & Reviews</div>
+      <p class="feat-desc">Build a reputation on campus. Rate transactions and view seller scores to make informed buying decisions.</p>
+    </div>
+    <div class="feature-card reveal">
+      <div class="feat-icon teal">🔔</div>
+      <div class="feat-title">Smart Alerts</div>
+      <p class="feat-desc">Set up watchlists for specific items. Get notified instantly when what you need pops up on the marketplace.</p>
+    </div>
+  </div>
+</section>
+
+<!-- HOW IT WORKS -->
+<section class="how" id="how">
+  <div class="section-header reveal" style="margin-left:auto;margin-right:auto;max-width:1200px">
+    <div class="section-eyebrow">Getting Started</div>
+    <div class="section-title">Up and Running<br>in Minutes</div>
+    <p class="section-sub">Four simple steps from sign-up to your first transaction on campus.</p>
+  </div>
+  <div class="steps">
+    <div class="step reveal">
+      <div class="step-num">1</div>
+      <div class="step-title">Create Account</div>
+      <p class="step-desc">Sign up with your email to verify your student status instantly.</p>
+    </div>
+    <div class="step reveal">
+      <div class="step-num">2</div>
+      <div class="step-title">Browse or List</div>
+      <p class="step-desc">Search for what you need, or post your items with photos in under 2 minutes.</p>
+    </div>
+    <div class="step reveal">
+      <div class="step-num">3</div>
+      <div class="step-title">Connect & Chat</div>
+      <p class="step-desc">Message the buyer or seller directly through the app to agree on terms.</p>
+    </div>
+    <div class="step reveal">
+      <div class="step-num">4</div>
+      <div class="step-title">Meet & Trade</div>
+      <p class="step-desc">Arrange a meetup on campus and complete the exchange securely and confidently.</p>
+    </div>
+  </div>
+</section>
+
+<!-- CATEGORIES -->
+<section class="categories" id="categories">
+  <div class="section-header reveal">
+    <div class="section-eyebrow">Browse by Category</div>
+    <div class="section-title">Everything Campus Life Needs</div>
+  </div>
+  <div class="cat-grid">
+    <a href="dashboard-products.html#textbooks" class="cat-item reveal"><span class="cat-emoji">📚</span><span class="cat-name">Textbooks</span></a>
+    <a href="dashboard-products.html#electronics" class="cat-item reveal"><span class="cat-emoji">💻</span><span class="cat-name">Electronics</span></a>
+    <a href="dashboard-services.html" class="cat-item reveal"><span class="cat-emoji">🎨</span><span class="cat-name">Services</span></a>
+    <a href="dashboard-products.html#fashion" class="cat-item reveal"><span class="cat-emoji">👗</span><span class="cat-name">Fashion</span></a>
+    <a href="dashboard-products.html#furniture" class="cat-item reveal"><span class="cat-emoji">🛋️</span><span class="cat-name">Furniture</span></a>
+    <a href="dashboard-products.html#food" class="cat-item reveal"><span class="cat-emoji">🍱</span><span class="cat-name">Food &amp; Snacks</span></a>
+  </div>
+</section>
+
+<!-- CTA -->
+<section class="cta-section">
+  <div class="cta-glow"></div>
+  <div class="cta-inner reveal">
+    <h2>Ready to Join Your Campus Marketplace?</h2>
+    <p>Thousands of students are already buying and selling smart on PU-Connect. Don't miss out on the easiest way to trade on campus.</p>
+    <div class="cta-actions">
+      <a href="{% url 'auth:auth_view' %}#signup" class="btn-primary">Create Free Account</a>
+      <a href="{% url 'Dash_app:dashboard' %}" class="btn-ghost">Browse Listings</a>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+{% include 'base/footer.html' %}
+
+<script>
+  // Scroll reveal
+  const reveals = document.querySelectorAll('.reveal');
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); } });
+  }, { threshold: 0.12 });
+  reveals.forEach(el => observer.observe(el));
+
+  // Hamburger
+  const hamburger = document.getElementById('hamburger');
+  const mobileMenu = document.getElementById('mobileMenu');
+  hamburger.addEventListener('click', () => {
+    mobileMenu.classList.toggle('open');
+  });
+  /* ── THEME ── */
+(function(){
+  var _H = document.documentElement;
+  var _TB = document.getElementById('idxTheme');
+  var _dark = localStorage.getItem('pu-theme') !== 'light';
+  function applyTheme(d) {
+    _H.setAttribute('data-theme', d ? 'dark' : 'light');
+    if (_TB) _TB.textContent = d ? '🌞' : '🌙';
+    _dark = d;
+    localStorage.setItem('pu-theme', d ? 'dark' : 'light');
+    var m = document.getElementById('themeColorMeta');
+    if (m) m.setAttribute('content', d ? '#0d0e11' : '#f0ede8');
+  }
+  applyTheme(_dark);
+  if (_TB) _TB.addEventListener('click', function(){ applyTheme(!_dark); });
+  window._applyTheme = applyTheme;
+})();
+  mobileMenu.querySelectorAll('a').forEach(a => {
+    a.addEventListener('click', () => mobileMenu.classList.remove('open'));
+  });
+
+
+  // ── Populate hero cards from real pu-listings ────────────────────────
+  (function() {
+    var CAT_ICONS = {
+      electronics:'💻', textbooks:'📚', fashion:'👗', food:'🍱',
+      furniture:'🛋️', design:'🎨', tutoring:'📖', tech:'💻',
+      delivery:'🏃', writing:'✍️', photo:'📸', sports:'⚽',
+      tools:'🔧', beauty:'💄', vehicles:'🚗', other:'🏷️'
+    };
+    var TYPE_TAGS = {
+      service: { bg:'rgba(91,229,197,.15)', color:'#5be5c5' },
+      product: { bg:'rgba(232,201,106,.15)', color:'var(--accent)' }
+    };
+    var FALLBACK_CARDS = [
+      { icon:'📚', name:'Textbooks & Notes', price:'From GH₵ 20', seller:'campus sellers', cat:'textbooks', type:'product' },
+      { icon:'💻', name:'Electronics & Gadgets', price:'From GH₵ 150', seller:'verified sellers', cat:'electronics', type:'product' },
+      { icon:'🎨', name:'Creative Services', price:'From GH₵ 50', seller:'skilled students', cat:'design', type:'service' },
+      { icon:'🛋️', name:'Furniture & Decor', price:'From GH₵ 80', seller:'campus listings', cat:'furniture', type:'product' }
+    ];
+
+    function fmtPrice(l) {
+      if (l.contactForPrice) return 'Contact for price';
+      if (l.priceLabel) return l.priceLabel;
+      if (l.price != null) return 'GH₵ ' + Number(l.price).toLocaleString();
+      return '';
+    }
+
+    function buildCard(data, isListing) {
+      var isSvc = data.type === 'service';
+      var tag = (isSvc ? TYPE_TAGS.service : TYPE_TAGS.product);
+      var catKey = (data.cat || 'other').toLowerCase();
+      var icon = CAT_ICONS[catKey] || (isSvc ? '🛠️' : '📦');
+      var tagLabel = isListing
+        ? (data.category || data.cat || (isSvc ? 'Service' : 'Product'))
+        : (isSvc ? 'Services' : (data.cat ? (data.cat.charAt(0).toUpperCase()+data.cat.slice(1)) : 'Product'));
+
+      var imgHTML = (data.img && data.img.length > 4)
+        ? '<div class="pc-img"><img src="' + data.img + '" alt="" loading="lazy"/></div>'
+        : '<div class="pc-img" style="background:' + tag.bg + '">' + icon + '</div>';
+
+      return imgHTML
+        + '<div class="pc-name">' + (data.title || data.name || 'Listing').substring(0, 28) + '</div>'
+        + (fmtPrice(data) ? '<div class="pc-price">' + fmtPrice(data) + '</div>' : '')
+        + '<div class="pc-seller">by @' + (data.sellerUsername || data.seller || 'student').substring(0, 16) + '</div>'
+        + '<span class="pc-tag" style="background:' + tag.bg + ';color:' + tag.color + '">' + tagLabel + '</span>';
+    }
+
+    function populateCards() {
+      var listings = [];
+      try {
+        listings = JSON.parse(localStorage.getItem('pu-listings') || '[]')
+          .filter(function(l) { return l.status === 'active' || l.status === 'boosted'; })
+          .slice(0, 4);
+      } catch(e) {}
+
+      for (var i = 0; i < 4; i++) {
+        var el = document.getElementById('idx-card-' + i);
+        if (!el) continue;
+        var data = listings[i] || FALLBACK_CARDS[i];
+        el.innerHTML = buildCard(data, !!listings[i]);
+        el.style.cursor = listings[i] ? 'pointer' : 'default';
+        if (listings[i]) {
+          (function(id) {
+            el.onclick = function() {
+              localStorage.setItem('pu-open-listing', id);
+              location.href = '{% url "listings:listings" %}';
+            };
+          })(listings[i].id);
+        }
+      }
+    }
+
+    populateCards();
+
+    // Refresh if storage changes (listing added from another tab)
+    window.addEventListener('storage', function(e) {
+      if (e.key === 'pu-listings') populateCards();
+    });
+  })();
+  // ─────────────────────────────────────────────────────────────────────
+</script>
+</body>
+</html>

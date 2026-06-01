@@ -1,0 +1,299 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<meta name="theme-color" content="#0d0e11" id="themeColorMeta"/>
+<title>Wishlist — PU-Connect</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=DM+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="{% static 'Listings_app/css/wishlist.css' %}">
+</head>
+<body>
+
+<div class="ov" id="ov" onclick="closeSb()"></div>
+<aside class="sb" id="sb">
+  <div class="sbh">
+    <div class="sbl">PU-<span>Connect</span></div>
+    <button class="sbx" onclick="closeSb()">&#x2715;</button>
+  </div>
+  <div class="sbsec">Navigate</div>
+  <ul class="sbul">
+    <li><a href="{% url 'base:home' %}"><span class="ico">&#x1F3E0;</span>Home</a></li>
+    <li><a href="{% url 'Dash_app:dashboard' %}"><span class="ico">&#x26A1;</span>Dashboard</a></li>
+    <li><a href="{% url 'Dash_app:dashboard' %}"><span class="ico">&#x1F4E6;</span>Products</a></li>
+    <li><a href="{% url 'Dash_app:dashboard_services' %}"><span class="ico">&#x1F6E0;&#xFE0F;</span>Services</a></li>
+    <li><a href="{% url 'listings:wishlist' %}" class="act"><span class="ico">&#x2764;&#xFE0F;</span>Wishlist</a></li>
+    <li><a href="{% url 'listings:listings' %}"><span class="ico">&#x1F3F7;&#xFE0F;</span>My Listings</a></li>
+    <li><a href="{% url 'search:search' %}"><span class="ico">&#x1F50D;</span>Search</a></li>
+  </ul>
+  <div class="sbd"></div>
+  <div class="sbsec">Account</div>
+  <ul class="sbul">
+    <li><a href="{% url 'profile:profile' %}"><span class="ico">&#x1F464;</span>Profile</a></li>
+  </ul>
+  <div class="sbd"></div>
+  <div class="sbsec">Info</div>
+  <ul class="sbul">
+    <li><a href="{% url 'base:about' %}"><span class="ico">&#x2139;&#xFE0F;</span>About Us</a></li>
+    <li><a href="{% url 'base:safety' %}"><span class="ico">&#x1F6E1;&#xFE0F;</span>Safety</a></li>
+    <li><a href="{% url 'base:help' %}"><span class="ico">&#x2753;</span>Help Centre</a></li>
+    <li><a href="{% url 'base:privacy' %}"><span class="ico">&#x1F512;</span>Privacy</a></li>
+    <li><a href="{% url 'base:terms' %}"><span class="ico">&#x1F4C4;</span>Terms</a></li>
+  </ul>
+  <div class="sbd"></div>
+  <ul class="sbul">
+    <li><a href="{% url 'auth:auth_view' %}" style="color:var(--red)"><span class="ico">&#x1F6AA;</span>Log Out</a></li>
+  </ul>
+  <div class="sbft">&#169; 2026 PU-Connect<br>Built for campus, by students.</div>
+</aside>
+
+<nav class="tnav">
+  <button class="hbg" id="hbg"><span></span><span></span><span></span></button>
+  <div class="nav-title">&#x2764;&#xFE0F; Wishlist</div>
+  <button class="thbtn" id="thbtn">🌞</button>
+</nav>
+
+<div class="wrap">
+<div class="inner">
+
+  <div class="ph">
+    <div class="ph-ico">&#x2764;&#xFE0F;</div>
+    <div>
+      <div class="ph-title">Saved Items</div>
+      <div class="ph-sub" id="wish-count">0 saved items</div>
+    </div>
+  </div>
+
+  <div class="fpills">
+    <div class="fp on" onclick="filt(this,'all')">All Items</div>
+    <div class="fp" onclick="filt(this,'electronics')">&#x1F4BB; Electronics</div>
+    <div class="fp" onclick="filt(this,'textbooks')">&#x1F4DA; Textbooks</div>
+    <div class="fp" onclick="filt(this,'fashion')">&#x1F457; Fashion</div>
+    <div class="fp" onclick="filt(this,'furniture')">&#x1F6CB;&#xFE0F; Furniture</div>
+    <div class="fp" onclick="filt(this,'food')">&#x1F371; Food</div>
+    <div class="fp" onclick="filt(this,'service')">&#x1F6E0;&#xFE0F; Services</div>
+  </div>
+
+  <div class="slbl">
+    <h2>&#x1F6CD;&#xFE0F; My Saved Listings</h2>
+    <a href="{% url 'Dash_app:dashboard' %}" style="font-size:.76rem;color:var(--a);text-decoration:none;font-weight:500">Browse more &#x2192;</a>
+  </div>
+
+  <div class="wgrid" id="wg"></div>
+
+</div>
+</div>
+
+<script>
+/* ── THEME ── */
+var _H = document.documentElement;
+var _TB = document.getElementById('thbtn');
+var _dark = true;
+function applyTheme(d) {
+  _H.setAttribute('data-theme', d ? 'dark' : 'light');
+  _TB.textContent = d ? '☀️' : '🌙';
+  _dark = d;
+  localStorage.setItem('pu-theme', d ? 'dark' : 'light');
+  var m = document.getElementById('themeColorMeta');
+  if (m) m.setAttribute('content', d ? '#0d0e11' : '#f0ede8');
+}
+(function(){ var sv = localStorage.getItem('pu-theme'); applyTheme(sv ? sv === 'dark' : true); })();
+_TB.addEventListener('click', function(){ applyTheme(!_dark); });
+
+/* ── SIDEBAR ── */
+var _sb = document.getElementById('sb');
+var _ov = document.getElementById('ov');
+document.getElementById('hbg').onclick = function() {
+  _sb.classList.add('on'); _ov.classList.add('on'); document.body.style.overflow = 'hidden';
+};
+function closeSb() {
+  _sb.classList.remove('on'); _ov.classList.remove('on'); document.body.style.overflow = '';
+}
+if (window.innerWidth >= 960) _sb.classList.add('on');
+window.addEventListener('resize', function() {
+  if (window.innerWidth >= 960) { _sb.classList.add('on'); _ov.classList.remove('on'); }
+  else _sb.classList.remove('on');
+  });
+
+  /* ════════════════════════════════════
+   DATA
+  return String(s || '').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+}
+function fmtPrice(l) {
+  if (l.contactForPrice) return 'Contact for Price';
+  if (l.priceLabel) return l.priceLabel;
+  if (l.price != null && l.price !== '') {
+    return 'GH\u20B5\u00A0' + Number(l.price).toLocaleString() + (l.negotiable ? ' (Neg.)' : '');
+  }
+  return '\u2014';
+}
+function timeAgo(ts) {
+  if (!ts) return '';
+  var s = Math.floor((Date.now() - ts) / 1000);
+  if (s < 60) return 'Just now';
+  if (s < 3600) return Math.floor(s / 60) + 'm ago';
+  if (s < 86400) return Math.floor(s / 3600) + 'h ago';
+  if (s < 604800) return Math.floor(s / 86400) + 'd ago';
+  return new Date(ts).toLocaleDateString('en-GH', { day: 'numeric', month: 'short' });
+}
+
+/* ── LOAD DATA ──
+   Reads pu-wish-ids (array of id strings) and
+   cross-references pu-listings (raw listing objects).
+   No derived/shaped fields like bc/bt/badge needed.
+── */
+function loadWishlistItems() {
+  try {
+    var rawIds = JSON.parse(localStorage.getItem('pu-wish-ids') || '[]');
+    var ids = {};
+    for (var i = 0; i < rawIds.length; i++) ids[String(rawIds[i])] = true;
+    var all = JSON.parse(localStorage.getItem('pu-listings') || '[]');
+    return all.filter(function(l) { return !!ids[String(l.id)]; });
+  } catch(e) { return []; }
+}
+
+/* ── STATE ── */
+var ITEMS = loadWishlistItems();
+var wishIds = {};
+ITEMS.forEach(function(i){ wishIds[String(i.id)] = true; });
+var activeCat = 'all';
+
+/* ── RENDER ── */
+function render() {
+  var g = document.getElementById('wg');
+  var countEl = document.getElementById('wish-count');
+
+  var vis = ITEMS.filter(function(l) {
+    if (!wishIds[String(l.id)]) return false;
+    if (activeCat === 'all') return true;
+    if (activeCat === 'service') return l.type === 'service';
+    var cat = (l.cat || '').toLowerCase();
+    var category = (l.category || '').toLowerCase();
+    return cat === activeCat || category.indexOf(activeCat) !== -1;
+  });
+
+  var total = Object.keys(wishIds).length;
+  if (countEl) countEl.textContent = total + ' saved item' + (total !== 1 ? 's' : '');
+
+  if (!vis.length) {
+    g.innerHTML = '<div class="empty-state">'
+      + '<div class="es-icon">\u2764\uFE0F</div>'
+      + '<p>' + (activeCat === 'all' ? 'No saved items yet.<br>Browse listings and tap \u2764\uFE0F to save.' : 'No saved items in this category.') + '</p>'
+      + '<a href="{% url 'Dash_app:dashboard' %}" class="es-btn">Browse Listings</a>'
+      + '</div>';
+    return;
+  }
+
+  var html = '';
+  for (var i = 0; i < vis.length; i++) {
+    var l = vis[i];
+    var isSvc   = l.type === 'service';
+    var title   = escH(l.title || l.name || 'Untitled');
+    var price   = escH(fmtPrice(l));
+    var seller  = escH(l.sellerUsername || l.seller || '');
+    var catLbl  = escH(l.category || l.cat || (isSvc ? 'Service' : 'Product'));
+    var typeClr = isSvc ? '#5be5c5' : 'var(--a)';
+    var typeBg  = isSvc ? 'rgba(91,229,197,.14)' : 'rgba(232,201,106,.14)';
+    var idSafe  = String(l.id).replace(/['"\\<>]/g, '');
+    var isSold  = l.status === 'sold';
+    var ago     = timeAgo(l.postedAt);
+
+    /* Only render <img> when there is an actual src */
+    var imgHTML = (l.img && l.img.length > 4)
+      ? '<img src="' + escH(l.img) + '" alt="' + title + '" loading="lazy" style="width:100%;height:100%;object-fit:cover;display:block"/>'
+      : '<div style="width:100%;height:100%;display:flex;align-items:center;justify-content:center;font-size:2.5rem;background:var(--inp)">' + (isSvc ? '\uD83D\uDEE0\uFE0F' : '\uD83D\uDCE6') + '</div>';
+
+    var soldHTML = isSold
+      ? '<div style="position:absolute;inset:0;background:rgba(0,0,0,.55);display:flex;align-items:center;justify-content:center;color:#fff;font-size:.72rem;font-weight:700;letter-spacing:.8px">SOLD</div>'
+      : '';
+
+    html += '<div class="wcard" onclick="openDetail(\'' + idSafe + '\')">'
+      + '<div class="wcimg">' + imgHTML
+      + '<span class="wcbg" style="background:' + typeBg + ';color:' + typeClr + '">' + catLbl + '</span>'
+      + soldHTML + '</div>'
+      + '<div class="wcbd">'
+      + '<div class="wcnm">' + title + '</div>'
+      + '<div class="wcpr">' + price + '</div>'
+      + '<div class="wcrw">'
+      + '<span class="wcsl">@' + seller + (ago ? ' \u00B7 ' + ago : '') + '</span>'
+      + '<button class="rm-btn" onclick="event.stopPropagation();removeWish(\'' + idSafe + '\')" title="Remove">\uD83D\uDDD1\uFE0F</button>'
+      + '</div></div></div>';
+  }
+  g.innerHTML = html;
+}
+
+/* ── REMOVE ── */
+function removeWish(id) {
+  id = String(id);
+  delete wishIds[id];
+  ITEMS = ITEMS.filter(function(i){ return String(i.id) !== id; });
+  try {
+    localStorage.setItem('pu-wish-ids', JSON.stringify(Object.keys(wishIds)));
+  } catch(e) {}
+  render();
+  showToast('Removed from saved');
+}
+
+/* ── FILTER ── */
+function filt(pill, cat) {
+  document.querySelectorAll('.fp').forEach(function(p){ p.classList.remove('on'); });
+  pill.classList.add('on');
+  activeCat = cat;
+  render();
+}
+
+/* ── OPEN DETAIL ── */
+function openDetail(id) {
+  try { localStorage.setItem('pu-open-listing', String(id)); } catch(e) {}
+  location.href = 'dashboard.html';
+}
+
+/* ── TOAST ── */
+var _toastTimer;
+function showToast(msg) {
+  var t = document.getElementById('wl-toast');
+  if (!t) {
+    t = document.createElement('div');
+    t.id = 'wl-toast';
+    t.style.position = 'fixed';
+    t.style.bottom = 'calc(var(--bh,78px) + 18px)';
+    t.style.left = '50%';
+    t.style.transform = 'translateX(-50%) translateY(20px)';
+    t.style.background = 'var(--card)';
+    t.style.border = '1px solid rgba(255,255,255,.1)';
+    t.style.borderRadius = '10px';
+    t.style.padding = '.6rem 1.2rem';
+    t.style.fontSize = '.82rem';
+    t.style.fontWeight = '500';
+    t.style.color = 'var(--t)';
+    t.style.boxShadow = '0 8px 32px rgba(0,0,0,.5)';
+    t.style.opacity = '0';
+    t.style.transition = 'opacity .3s,transform .3s';
+    t.style.pointerEvents = 'none';
+    t.style.zIndex = '999';
+    t.style.whiteSpace = 'nowrap';
+    document.body.appendChild(t);
+  }
+  t.textContent = msg;
+  t.style.opacity = '1';
+  t.style.transform = 'translateX(-50%) translateY(0)';
+  clearTimeout(_toastTimer);
+  _toastTimer = setTimeout(function() {
+    t.style.opacity = '0';
+    t.style.transform = 'translateX(-50%) translateY(20px)';
+  }, 2500);
+}
+
+/* ── INIT ── */
+render();
+
+window.addEventListener('focus', function() {
+  ITEMS = loadWishlistItems();
+  wishIds = {};
+  ITEMS.forEach(function(i){ wishIds[String(i.id)] = true; });
+  render();
+});
+</script>
+</body>
+</html>
