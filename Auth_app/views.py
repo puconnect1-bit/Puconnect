@@ -14,7 +14,6 @@ from django.core.exceptions import ValidationError
 
 
 from django.urls import reverse
-from Profile_app.models import Profile
 
 
 
@@ -106,9 +105,6 @@ def signup_api(request):
                 first_name=fname,
                 last_name=lname
             )
-            
-            # Create a profile for the user if it doesn't exist
-            Profile.objects.get_or_create(user=user)
             
             # Log the user in after registration
             user.backend = 'django.contrib.auth.backends.ModelBackend'

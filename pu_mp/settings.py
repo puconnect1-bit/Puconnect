@@ -225,7 +225,8 @@ ACCOUNT_USERNAME_REQUIRED = True
 ACCOUNT_EMAIL_VERIFICATION = 'none'  # Set to 'optional' or 'mandatory' if needed
 
 SOCIALACCOUNT_LOGIN_ON_GET = True  # Automatically log in after social authentication
-
+SOCIALACCOUNT_AUTO_SIGNUP = True   # Bypass the intermediate social signup page
+SOCIALACCOUNT_QUERY_EMAIL = ACCOUNT_EMAIL_REQUIRED
 LOGIN_REDIRECT_URL= 'Dash_app:dashboard'
 LOGOUT_REDIRECT_URL= 'login_view'
 
