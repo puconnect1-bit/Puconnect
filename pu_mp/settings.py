@@ -27,7 +27,7 @@ if not SECRET_KEY:
     raise ValueError("SECRET_KEY environment variable not set")
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = os.environ.get('DEBUG', 'False').lower() == 'true'
+DEBUG = True
 
 ALLOWED_HOSTS = ['puconnect-jr7q.onrender.com', 'localhost', '127.0.0.1']
 
@@ -39,7 +39,7 @@ SECURE_BROWSER_XSS_FILTER = True
 SECURE_CONTENT_TYPE_NOSNIFF = True
 SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
 
-SITE_ID = int(os.environ.get('SITE_ID', 1))
+SITE_ID = 1
 
 INSTALLED_APPS = [
     'daphne',
@@ -49,6 +49,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'django.contrib.sites',
     'Auth_app',
     'dash_app',
     'Base_app',
@@ -56,7 +57,6 @@ INSTALLED_APPS = [
     'search_app',
     'chat_app',
     'Listings_app',
-    'django.contrib.sites',
     'channels',
     'allauth',
     'allauth.account',
@@ -81,11 +81,6 @@ CHANNEL_LAYERS = {
 
 SOCIALACCOUNT_PROVIDERS = {
     'google': {
-        'APP': {
-            'client_id': os.environ.get('GOOGLE_CLIENT_ID'),
-            'secret': os.environ.get('GOOGLE_CLIENT_SECRET'),
-            'key': ''
-        },
         'SCOPE': [
             'profile',
             'email',
@@ -129,10 +124,6 @@ TEMPLATES = [
 WSGI_APPLICATION = 'pu_mp.wsgi.application'
 
 
-import dj_database_url
-
-# ... (Security and App config)
-
 # Database
 # https://docs.djangoproject.com/en/6.0/ref/settings/#databases
 
@@ -157,6 +148,7 @@ else:
             'PORT': '5432',
         }
     }
+
 
 
 # Password validation
