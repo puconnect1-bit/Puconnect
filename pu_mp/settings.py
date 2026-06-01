@@ -222,15 +222,16 @@ AUTHENTICATION_BACKENDS = (
 )
 
 # Allauth settings
-ACCOUNT_AUTHENTICATION_METHOD = 'username_email'
-ACCOUNT_EMAIL_REQUIRED = True
+ACCOUNT_LOGIN_METHODS = {'username', 'email'}
 ACCOUNT_UNIQUE_EMAIL = True
-ACCOUNT_USERNAME_REQUIRED = True
-ACCOUNT_EMAIL_VERIFICATION = 'none'  # Set to 'optional' or 'mandatory' if needed
+ACCOUNT_EMAIL_VERIFICATION = 'none' 
+
+# New way to handle required fields and signup form
+ACCOUNT_SIGNUP_FIELDS = ['email*', 'username*', 'first_name', 'last_name']
 
 SOCIALACCOUNT_LOGIN_ON_GET = True  # Automatically log in after social authentication
 SOCIALACCOUNT_AUTO_SIGNUP = True   # Bypass the intermediate social signup page
-SOCIALACCOUNT_QUERY_EMAIL = ACCOUNT_EMAIL_REQUIRED
+SOCIALACCOUNT_QUERY_EMAIL = True   # Ensure we get the email from Google
 
 # Seamless Social Account Connection
 SOCIALACCOUNT_EMAIL_AUTHENTICATION = True
