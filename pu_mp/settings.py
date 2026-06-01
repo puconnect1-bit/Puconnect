@@ -214,6 +214,13 @@ AUTHENTICATION_BACKENDS = (
     'allauth.account.auth_backends.AuthenticationBackend',
 )
 
+# Allauth settings
+ACCOUNT_AUTHENTICATION_METHOD = 'username_email'
+ACCOUNT_EMAIL_REQUIRED = True
+ACCOUNT_UNIQUE_EMAIL = True
+ACCOUNT_USERNAME_REQUIRED = True
+ACCOUNT_EMAIL_VERIFICATION = 'none'  # Set to 'optional' or 'mandatory' if needed
+
 SOCIALACCOUNT_LOGIN_ON_GET = True  # Automatically log in after social authentication
 
 LOGIN_REDIRECT_URL= 'Dash_app:dashboard'

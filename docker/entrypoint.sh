@@ -7,6 +7,15 @@ set -e
 echo "Applying database migrations..."
 python manage.py migrate --noinput
 
+# Create superuser if environment variables are set
+if [ "$DJANGO_SUPERUSER_USERNAME" ] && [ "$DJANGO_SUPERUSER_PASSWORD" ]; then
+    echo "Creating superuser..."
+    python manage.py createsuperuser \
+        --no-input \
+        --username "$DJANGO_SUPERUSER_USERNAME" \
+        --email "$DJANGO_SUPERUSER_EMAIL" || echo "Superuser already exists or creation failed"
+fi
+
 # Ensure staticfiles directory exists
 mkdir -p /app/staticfiles
 

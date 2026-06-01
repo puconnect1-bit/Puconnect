@@ -127,6 +127,7 @@ def login_page(request):
 
 # Additional views for registration, password reset, etc. can be added here as needed.
 
+@ensure_csrf_cookie
 def Auth_view(request):
     """
     Authentication Page (Login/Signup)
