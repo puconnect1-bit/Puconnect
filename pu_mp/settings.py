@@ -127,8 +127,17 @@ import dj_database_url
 # Database
 # https://docs.djangoproject.com/en/6.0/ref/settings/#databases
 
-# For local Docker development
-if DEBUG:
+DATABASE_URL = os.environ.get('DATABASE_URL')
+
+if DATABASE_URL:
+    DATABASES = {
+        'default': dj_database_url.config(
+            default=DATABASE_URL,
+            conn_max_age=600,
+            ssl_require=True
+        )
+    }
+else:
     DATABASES = {
         'default': {
             'ENGINE': 'django.db.backends.postgresql',
@@ -138,20 +147,6 @@ if DEBUG:
             'HOST': 'db',
             'PORT': '5432',
         }
-    }
-# For production (Render/Cloud)
-else:
-    # Ensure DATABASE_URL is set in production environment
-    DATABASE_URL = os.environ.get('DATABASE_URL')
-    if not DATABASE_URL:
-        raise ValueError("DATABASE_URL environment variable must be set in production")
-    
-    DATABASES = {
-        'default': dj_database_url.config(
-            default=DATABASE_URL,
-            conn_max_age=600,
-            ssl_require=True
-        )
     }
 
 
