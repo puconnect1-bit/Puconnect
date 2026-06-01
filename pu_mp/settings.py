@@ -81,6 +81,11 @@ CHANNEL_LAYERS = {
 
 SOCIALACCOUNT_PROVIDERS = {
     'google': {
+        'APP': {
+            'client_id': os.environ.get('GOOGLE_CLIENT_ID'),
+            'secret': os.environ.get('GOOGLE_CLIENT_SECRET'),
+            'key': ''
+        },
         'SCOPE': [
             'profile',
             'email',
@@ -89,7 +94,6 @@ SOCIALACCOUNT_PROVIDERS = {
             'access_type': 'online',
             'prompt': 'select_account',
         },
-        # Add any additional configuration here
     }
 }
 
@@ -227,6 +231,11 @@ ACCOUNT_EMAIL_VERIFICATION = 'none'  # Set to 'optional' or 'mandatory' if neede
 SOCIALACCOUNT_LOGIN_ON_GET = True  # Automatically log in after social authentication
 SOCIALACCOUNT_AUTO_SIGNUP = True   # Bypass the intermediate social signup page
 SOCIALACCOUNT_QUERY_EMAIL = ACCOUNT_EMAIL_REQUIRED
+
+# Seamless Social Account Connection
+SOCIALACCOUNT_EMAIL_AUTHENTICATION = True
+SOCIALACCOUNT_EMAIL_AUTHENTICATION_AUTO_CONNECT = True
+
 LOGIN_REDIRECT_URL= 'Dash_app:dashboard'
 LOGOUT_REDIRECT_URL= 'login_view'
 

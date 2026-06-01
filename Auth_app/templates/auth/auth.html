@@ -481,7 +481,7 @@
 
     // 1. Define the URL first
     // Check: Are there spaces inside the quotes? Ensure it looks exactly like this:
-    const GOOGLE_LOGIN_URL = "{% provider_login_url 'google' next='' %}";
+    const GOOGLE_LOGIN_URL = "{% provider_login_url 'google' next='/dashboard/dashboard/' %}";
 
     function handleSocial(provider) {
         console.log("Button clicked for:", provider); // Debugging line

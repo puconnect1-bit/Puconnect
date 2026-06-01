@@ -62,6 +62,8 @@ This application is configured for deployment on Render using the included `Dock
 | `DEBUG` | Set to `False` |
 | `DJANGO_SUPERUSER_USERNAME` | Auto-creates admin on first deploy |
 | `DJANGO_SUPERUSER_PASSWORD` | Password for the auto-created admin |
+| `GOOGLE_CLIENT_ID` | Google OAuth2 Client ID |
+| `GOOGLE_CLIENT_SECRET` | Google OAuth2 Client Secret |
 
 ## 📁 Project Structure
 
