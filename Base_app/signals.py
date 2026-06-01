@@ -11,15 +11,15 @@ def update_site_domain(sender, **kwargs):
     """
     if sender.name == 'django.contrib.sites':
         from django.contrib.sites.models import Site
-        
-        # Determine the domain from environment or settings
-        # On Render, we can use ALLOWED_HOSTS or a custom env var
-        domain = 'puconnect-jr7q.onrender.com'
-        name = 'PU-Marketplace'
-        
-        site_id = getattr(settings, 'SITE_ID', 1)
-        
-        Site.objects.filter(id=site_id).update(domain=domain, name=name)
-        # Ensure it exists if not present
-        if not Site.objects.filter(id=site_id).exists():
-            Site.objects.create(id=site_id, domain=domain, name=name)
+        try:
+            # Determine the domain from environment or settings
+            domain = 'puconnect-jr7q.onrender.com'
+            name = 'PU-Marketplace'
+            
+            site_id = getattr(settings, 'SITE_ID', 1)
+            
+            Site.objects.filter(id=site_id).update(domain=domain, name=name)
+            if not Site.objects.filter(id=site_id).exists():
+                Site.objects.create(id=site_id, domain=domain, name=name)
+        except Exception:
+            pass # Prevent migration failures from breaking the app
