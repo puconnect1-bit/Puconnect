@@ -13,6 +13,7 @@ channels = "*"
 channels-redis = "*"
 redis = "==5.0.0"
 dj-database-url = "*"
+whitenoise = "*"
 
 [dev-packages]
 
