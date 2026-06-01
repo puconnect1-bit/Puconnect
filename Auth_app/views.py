@@ -13,6 +13,11 @@ from django.core.exceptions import ValidationError
 
 
 
+from django.urls import reverse
+from Profile_app.models import Profile
+
+
+
 # API endpoint for user login
 
 
@@ -101,13 +106,19 @@ def signup_api(request):
                 first_name=fname,
                 last_name=lname
             )
-            user.save()
+            
+            # Create a profile for the user if it doesn't exist
+            Profile.objects.get_or_create(user=user)
             
             # Log the user in after registration
             user.backend = 'django.contrib.auth.backends.ModelBackend'
             login(request, user)
 
-            return JsonResponse({'success': True, 'message': 'Account created successfully!', 'redirect': '/dash/dashboard/'})
+            return JsonResponse({
+                'success': True, 
+                'message': 'Account created successfully!', 
+                'redirect': reverse('Dash_app:dashboard')
+            })
 
         except json.JSONDecodeError:
             return JsonResponse({'success': False, 'message': 'Invalid JSON.'}, status=400)
