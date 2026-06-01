@@ -192,6 +192,12 @@ USE_TZ = True
 STATIC_URL = '/static/'
 STATICFILES_DIRS = [
     BASE_DIR / "static",
+    BASE_DIR / "Auth_app" / "static",
+    BASE_DIR / "Base_app" / "static",
+    BASE_DIR / "dash_app" / "static",
+    BASE_DIR / "Listings_app" / "static",
+    BASE_DIR / "Profile_app" / "static",
+    BASE_DIR / "search_app" / "static",
 ]
 STATIC_ROOT = BASE_DIR / "staticfiles"
 STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
