@@ -67,11 +67,14 @@ INSTALLED_APPS = [
 
 # Channels / ASGI config
 ASGI_APPLICATION = 'pu_mp.asgi.application'
+
+REDIS_URL = os.environ.get('REDIS_URL', 'redis://redis:6379')
+
 CHANNEL_LAYERS = {
     'default': {
         'BACKEND': 'channels_redis.core.RedisChannelLayer',
         'CONFIG': {
-            "hosts": [('redis', 6379)],
+            "hosts": [REDIS_URL],
         },
     },
 }
