@@ -14,5 +14,6 @@ mkdir -p /app/staticfiles
 echo "Collecting static files..."
 python manage.py collectstatic --noinput --clear
 
-# Execute the command passed to the container
-exec "$@"
+# Start the application using daphne (ASGI)
+echo "Starting Daphne server..."
+exec daphne pu_mp.asgi:application --port 8000 --bind 0.0.0.0
