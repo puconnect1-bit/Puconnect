@@ -12,6 +12,7 @@ daphne = "*"
 channels = "*"
 channels-redis = "*"
 redis = "==5.0.0"
+dj-database-url = "*"
 
 [dev-packages]
 
