@@ -7,9 +7,12 @@ set -e
 echo "Applying database migrations..."
 python manage.py migrate --noinput
 
+# Ensure staticfiles directory exists
+mkdir -p /app/staticfiles
+
 # Collect static files
 echo "Collecting static files..."
-python manage.py collectstatic --noinput
+python manage.py collectstatic --noinput --clear
 
 # Execute the command passed to the container
 exec "$@"
