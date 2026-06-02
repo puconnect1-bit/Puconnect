@@ -21,14 +21,12 @@ def update_site_domain(sender, **kwargs):
         except Exception:
             pass
 
-    # Cleanup duplicate SocialApps to prevent MultipleObjectsReturned
+    # Force usage of settings.py by wiping SocialApp entries from DB
     if sender.name == 'allauth.socialaccount':
         from allauth.socialaccount.models import SocialApp
         try:
-            google_apps = SocialApp.objects.filter(provider='google')
-            if google_apps.count() > 1:
-                # Keep the first one, delete the rest
-                first_app = google_apps.first()
-                SocialApp.objects.filter(provider='google').exclude(id=first_app.id).delete()
+            # We delete ALL google apps from the DB so that Django is FORCED
+            # to use the GOOGLE_CLIENT_ID from your Render Environment Variables.
+            SocialApp.objects.filter(provider='google').delete()
         except Exception:
             pass
