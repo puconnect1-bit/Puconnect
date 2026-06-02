@@ -65,6 +65,10 @@ This application is configured for deployment on Render using the included `Dock
 | `GOOGLE_CLIENT_ID` | Google OAuth2 Client ID |
 | `GOOGLE_CLIENT_SECRET` | Google OAuth2 Client Secret |
 
+### ⚠️ Critical Google Console Setting
+You **must** add this exact URL to your "Authorized redirect URIs" in the Google Cloud Console:
+`https://puconnect-jr7q.onrender.com/accounts/google/login/callback/`
+
 ## 📁 Project Structure
 
 - `Auth_app/`: User authentication, login/signup views, and social auth logic.
