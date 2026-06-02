@@ -819,6 +819,35 @@ window.addEventListener('focus', loadAllListings);
   };
 })();
 
+/* ── REAL-TIME NOTIFICATIONS ── */
+{% if user.is_authenticated %}
+(function(){
+  const wsScheme = window.location.protocol === "https:" ? "wss" : "ws";
+  const wsUrl = wsScheme + "://" + window.location.host + "/ws/notifications/";
+  const socket = new WebSocket(wsUrl);
+
+  socket.onmessage = function(e) {
+    const data = JSON.parse(e.data);
+    // Add to local notifs array
+    notifs.unshift({
+      id: data.id,
+      unread: true,
+      icon: "✉️",
+      bg: "rgba(232,201,106,.15)",
+      title: data.title,
+      desc: data.content,
+      time: data.created_at
+    });
+    renderNotifs();
+    showToast(data.title);
+  };
+
+  socket.onclose = function(e) {
+    console.error('Notification socket closed unexpectedly');
+  };
+})();
+{% endif %}
+
 </script>
 <script>async function loadDashboardFromDB() {
     const response = await fetch('/api/listings/all/'); // or your specific endpoint
