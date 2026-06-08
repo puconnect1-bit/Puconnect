@@ -8,6 +8,10 @@
   <title>Messages — PU-Connect</title>
   <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet"/>
   <link rel="stylesheet" href="{% static 'chat_app/css/chat.css' %}">
+  <style>
+    .msg-tick.pending { opacity: 0.5; animation: blink 1s infinite; }
+    @keyframes blink { 0%, 100% { opacity: 0.3; } 50% { opacity: 0.7; } }
+  </style>
 </head>
 <body data-user-id="{{ user.id }}">
 
@@ -537,6 +541,18 @@ function connectWebSocket(cid){
       time: data.timestamp
     };
     if(!msgs[cid]) msgs[cid]=[];
+    
+    // Optimistic UI: resolve pending messages
+    if (m.from === 'out' && m.text) {
+        const pendingIdx = msgs[cid].findIndex(msg => msg.pending && msg.text === m.text);
+        if (pendingIdx !== -1) {
+            msgs[cid][pendingIdx] = m; // Replace with server-confirmed message
+            if(activeConv?.id === cid) renderMsgs(cid);
+            fetchConversations();
+            return;
+        }
+    }
+
     msgs[cid].push(m);
     if(activeConv?.id === cid) renderMsgs(cid);
     fetchConversations();
@@ -781,7 +797,7 @@ function renderMsgs(cid){
       inner=`${actionBtn}<div class="bubble" id="msg-${cid}-${idx}">${replyQuote}${meetupHTML}${m.image_url?`<div class="img-bubble" onclick="previewFullImg('${m.image_url}')"><img src="${m.image_url}" alt="photo"/></div>`:''}${m.voice_url?`<div class="msg-voice">🎙️ Voice Note</div>`:''}${escHtml(m.text||'')}${editedTag}</div>`;
     }
 
-    inner+=`${pinnedTag}<div class="msg-meta"><span class="msg-time">${m.time}</span>${m.from==='out'?'<span class="msg-tick">✓✓</span>':''}</div>`;
+    inner+=`${pinnedTag}<div class="msg-meta"><span class="msg-time">${m.time}</span>${m.from==='out'?(m.pending?'<span class="msg-tick pending">✓</span>':'<span class="msg-tick">✓✓</span>'):''}</div>`;
     wrap.innerHTML=inner;
     area.appendChild(wrap);
   });
@@ -1720,6 +1736,16 @@ sendMessage=function(){
   }
 
   // Normal / reply send
+  const now=new Date();
+  const time=now.toLocaleTimeString('en-GH',{hour:'numeric',minute:'2-digit',hour12:true});
+  
+  // Optimistic UI push
+  const cid = activeConv.id;
+  if(!msgs[cid]) msgs[cid]=[];
+  const optMsg = { from: 'out', text, time, pending: true };
+  msgs[cid].push(optMsg);
+  renderMsgs(cid);
+
   const msgObj={
     message: text,
     image_url: null,
@@ -1733,6 +1759,7 @@ sendMessage=function(){
     inp.value='';inp.style.height='';
     toggleSend();
   } else {
+    // If socket is closed, we still showed it optimistically, but let's notify
     showToast('Not connected to chat server');
   }
 };

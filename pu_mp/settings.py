@@ -234,6 +234,7 @@ SOCIALACCOUNT_QUERY_EMAIL = True   # Ensure we get the email from Google
 SOCIALACCOUNT_EMAIL_AUTHENTICATION = True
 SOCIALACCOUNT_EMAIL_AUTHENTICATION_AUTO_CONNECT = True
 
+LOGIN_URL = 'auth:auth_view'
 LOGIN_REDIRECT_URL= 'Dash_app:dashboard'
-LOGOUT_REDIRECT_URL= 'login_view'
+LOGOUT_REDIRECT_URL= 'auth:auth_view'
 
