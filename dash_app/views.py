@@ -5,7 +5,7 @@ from django.contrib.auth.decorators import login_required
 
 #===================================================2024-06-01: Added dashboard view and template rendering
 
-@login_required
+
 def dashboard(request):
     """
     User Dashboard
