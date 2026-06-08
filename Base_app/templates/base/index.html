@@ -168,12 +168,12 @@
     <div class="section-title">Everything Campus Life Needs</div>
   </div>
   <div class="cat-grid">
-    <a href="dashboard-products.html#textbooks" class="cat-item reveal"><span class="cat-emoji">📚</span><span class="cat-name">Textbooks</span></a>
-    <a href="dashboard-products.html#electronics" class="cat-item reveal"><span class="cat-emoji">💻</span><span class="cat-name">Electronics</span></a>
-    <a href="dashboard-services.html" class="cat-item reveal"><span class="cat-emoji">🎨</span><span class="cat-name">Services</span></a>
-    <a href="dashboard-products.html#fashion" class="cat-item reveal"><span class="cat-emoji">👗</span><span class="cat-name">Fashion</span></a>
-    <a href="dashboard-products.html#furniture" class="cat-item reveal"><span class="cat-emoji">🛋️</span><span class="cat-name">Furniture</span></a>
-    <a href="dashboard-products.html#food" class="cat-item reveal"><span class="cat-emoji">🍱</span><span class="cat-name">Food &amp; Snacks</span></a>
+    <a href="{% url 'dash_app:dashboard_products' %}#textbooks" class="cat-item reveal"><span class="cat-emoji">📚</span><span class="cat-name">Textbooks</span></a>
+    <a href="{% url 'dash_app:dashboard_services' %}" class="cat-item reveal"><span class="cat-emoji">💻</span><span class="cat-name">Electronics</span></a>
+    <a href="{% url 'dash_app:dashboard_services '%}" class="cat-item reveal"><span class="cat-emoji">🎨</span><span class="cat-name">Services</span></a>
+    <a href="{% url 'dash_app:dashboard_products' %}#fashion" class="cat-item reveal"><span class="cat-emoji">👗</span><span class="cat-name">Fashion</span></a>
+    <a href="{% url 'dash_app:dashboard_products' %}#furniture" class="cat-item reveal"><span class="cat-emoji">🛋️</span><span class="cat-name">Furniture</span></a>
+    <a href="{% url 'dash_app:dashboard_products' %}#food" class="cat-item reveal"><span class="cat-emoji">🍱</span><span class="cat-name">Food &amp; Snacks</span></a>
   </div>
 </section>
 
