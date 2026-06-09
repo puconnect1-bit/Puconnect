@@ -4,7 +4,7 @@ from django.views.decorators.http import require_POST
 from django.http import JsonResponse
 from django.contrib.auth.models import User
 import json
-from .models import Conversation, Message
+from .models import Conversation, Message, Notification
 
 
 @login_required(login_url='auth:auth_view')
@@ -90,3 +90,30 @@ def start_conversation(request):
         return JsonResponse({'status': 'error', 'message': 'Listing not found'}, status=404)
     except Exception as e:
         return JsonResponse({'status': 'error', 'message': str(e)}, status=400)
+
+@login_required
+def get_notifications(request):
+    """Returns all notifications for the current user."""
+    notifs = request.user.notifications.all()[:20]
+    data = []
+    from django.utils import timezone
+    now = timezone.now()
+    for n in notifs:
+        data.append({
+            'id': n.id,
+            'unread': not n.is_read,
+            'icon': "✉️" if n.type == 'message' else "🔔",
+            'bg': "rgba(232,201,106,.15)",
+            'title': n.title,
+            'desc': n.content,
+            'time': n.created_at.strftime("%I:%M %p") if n.created_at.date() == now.date() else n.created_at.strftime("%b %d"),
+            'link': n.link
+        })
+    return JsonResponse(data, safe=False)
+
+@login_required
+@require_POST
+def mark_notifications_read(request):
+    """Marks all notifications as read."""
+    request.user.notifications.filter(is_read=False).update(is_read=True)
+    return JsonResponse({'status': 'success'})

@@ -76,7 +76,9 @@ class ChatConsumer(AsyncWebsocketConsumer):
             )
 
             # Send real-time notifications to each recipient
+            print(f"DEBUG: Broadcasting notifications to {len(notifications)} recipients")
             for notif in notifications:
+                print(f"DEBUG: Sending to user_{notif['user_id']}")
                 await self.channel_layer.group_send(
                     f"user_{notif['user_id']}",
                     {

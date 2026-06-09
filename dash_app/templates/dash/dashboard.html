@@ -414,6 +414,24 @@ function renderNotifs(){
 }
 function markRead(id){const n=notifs.find(x=>x.id===id);if(n){n.unread=false;renderNotifs();}}
 function markAllRead(){notifs.forEach(n=>n.unread=false);renderNotifs();}
+
+async function fetchNotifs() {
+  try {
+    const res = await fetch('/chat/api/notifications/');
+    const data = await res.json();
+    notifs = data.map(n => ({
+      id: n.id,
+      unread: n.unread,
+      icon: n.icon,
+      bg: n.bg,
+      title: n.title,
+      desc: n.desc,
+      time: n.time
+    }));
+    renderNotifs();
+  } catch(e) { console.error('Failed to fetch notifications', e); }
+}
+fetchNotifs();
 const markAllBtn = document.getElementById('markAllBtn');
 if(markAllBtn) markAllBtn.onclick=function(e){e.stopPropagation();markAllRead();};
 const NP=document.getElementById('npanel');
@@ -824,10 +842,16 @@ window.addEventListener('focus', loadAllListings);
 (function(){
   const wsScheme = window.location.protocol === "https:" ? "wss" : "ws";
   const wsUrl = wsScheme + "://" + window.location.host + "/ws/notifications/";
+  console.log("Connecting to notification WS:", wsUrl);
   const socket = new WebSocket(wsUrl);
+
+  socket.onopen = function() {
+    console.log("Notification WS connected");
+  };
 
   socket.onmessage = function(e) {
     const data = JSON.parse(e.data);
+    console.log("Notification received:", data);
     // Add to local notifs array
     notifs.unshift({
       id: data.id,

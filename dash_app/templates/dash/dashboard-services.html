@@ -517,6 +517,24 @@ let notifs=[...NOTIFS];
 function renderNotifs(){const list=document.getElementById('nlist');const unread=notifs.filter(n=>n.unread).length;const badge=document.getElementById('nbadge');if(unread>0){badge.textContent=unread>9?'9+':unread;badge.classList.remove('hidden')}else{badge.classList.add('hidden')}list.innerHTML=notifs.map(n=>`<div class="nitem${n.unread?' unread':''}" onclick="markRead(${n.id})"><div class="nico2" style="background:${n.bg}">${n.icon}</div><div class="ntxt"><div class="ntitle2">${n.title}</div><div class="ndesc">${n.desc}</div></div><div class="ntime">${n.time}</div></div>`).join('')}
 function markRead(id){const n=notifs.find(x=>x.id===id);if(n)n.unread=false;renderNotifs()}
 function markAllRead(){notifs.forEach(n=>n.unread=false);renderNotifs()}
+
+async function fetchNotifs() {
+  try {
+    const res = await fetch('/chat/api/notifications/');
+    const data = await res.json();
+    notifs = data.map(n => ({
+      id: n.id,
+      unread: n.unread,
+      icon: n.icon,
+      bg: n.bg,
+      title: n.title,
+      desc: n.desc,
+      time: n.time
+    }));
+    renderNotifs();
+  } catch(e) { console.error('Failed to fetch notifications', e); }
+}
+fetchNotifs();
 const NP=document.getElementById('npanel');
 function toggleNotif(){NP.classList.toggle('open')}
 document.addEventListener('click',e=>{if(!e.target.closest('#notibtn')&&!e.target.closest('#npanel'))NP.classList.remove('open')});
