@@ -1,16 +1,25 @@
+{% extends 'base/base.html' %}
 {% load static %}
-<!DOCTYPE html>
-<html lang="en" data-theme="dark">
-<head>
-  <a href="{% url 'base:home' %}" class="logo">PU-<span>Connect</span></a>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <meta name="theme-color" content="#0d0e11" id="themeColorMeta"/>
-  <title>PU-Connect — Campus Commerce, Reimagined</title>
-  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet"/>
-  <link rel="stylesheet" href="{% static "Base_app/css/index.css" %}">
-</head>
-<body>
 
+{% block structured_data %}
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Organization",
+  "name": "PU-Connect",
+  "url": "{{ request.scheme }}://{{ request.get_host }}",
+  "logo": "{{ request.scheme }}://{{ request.get_host }}{% static 'manifest.json' %}",
+  "description": "The ultimate campus marketplace for university students. Buy, sell, and trade safely on campus.",
+  "sameAs": [
+    "https://facebook.com/puconnect",
+    "https://twitter.com/puconnect",
+    "https://instagram.com/puconnect"
+  ]
+}
+</script>
+{% endblock %}
+
+{% block content %}
 <!-- NAV -->
 <nav>
   <a href="{% url 'base:home' %}" class="logo">PU-<span>Connect</span></a>
@@ -56,12 +65,10 @@
 
     <div class="hero-visual">
       <div class="hero-card-stack">
-
         <div class="product-card pc1" id="idx-card-0"></div>
         <div class="product-card pc2" id="idx-card-1"></div>
         <div class="product-card pc3" id="idx-card-2"></div>
         <div class="product-card pc4" id="idx-card-3"></div>
-
       </div>
     </div>
   </div>
@@ -189,24 +196,10 @@
     </div>
   </div>
 </section>
+{% endblock %}
 
-<!-- FOOTER -->
-{% include 'base/footer.html' %}
-
+{% block extra_js %}
 <script>
-  // Scroll reveal
-  const reveals = document.querySelectorAll('.reveal');
-  const observer = new IntersectionObserver((entries) => {
-    entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); } });
-  }, { threshold: 0.12 });
-  reveals.forEach(el => observer.observe(el));
-
-  // Hamburger
-  const hamburger = document.getElementById('hamburger');
-  const mobileMenu = document.getElementById('mobileMenu');
-  hamburger.addEventListener('click', () => {
-    mobileMenu.classList.toggle('open');
-  });
   /* ── THEME ── */
 (function(){
   var _H = document.documentElement;
@@ -224,10 +217,6 @@
   if (_TB) _TB.addEventListener('click', function(){ applyTheme(!_dark); });
   window._applyTheme = applyTheme;
 })();
-  mobileMenu.querySelectorAll('a').forEach(a => {
-    a.addEventListener('click', () => mobileMenu.classList.remove('open'));
-  });
-
 
   // ── Populate hero cards from real pu-listings ────────────────────────
   (function() {
@@ -307,7 +296,5 @@
       if (e.key === 'pu-listings') populateCards();
     });
   })();
-  // ─────────────────────────────────────────────────────────────────────
 </script>
-</body>
-</html>
+{% endblock %}
