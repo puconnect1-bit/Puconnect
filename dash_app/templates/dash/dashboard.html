@@ -795,9 +795,10 @@ window.addEventListener('focus', loadAllListings);
 
     /* Share */
     document.getElementById('ldShareBtn').onclick = function(){
+      const shareUrl = window.location.origin + '/listings/view/' + id + '/';
       const text = (l.title||l.name||'Listing')+' — '+(fmtPrice(l))+' on PU-Connect';
-      if(navigator.share){ navigator.share({title:l.title||l.name||'',text,url:location.href}).catch(()=>{}); }
-      else { navigator.clipboard?.writeText(text).then(()=>ldToast('Link copied!')).catch(()=>ldToast('Copied!')); }
+      if(navigator.share){ navigator.share({title:l.title||l.name||'',text,url:shareUrl}).catch(()=>{}); }
+      else { navigator.clipboard?.writeText(shareUrl).then(()=>ldToast('Link copied!')).catch(()=>ldToast('Copied!')); }
     };
 
     /* Show overlay */

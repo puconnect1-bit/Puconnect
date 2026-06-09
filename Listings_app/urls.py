@@ -20,5 +20,5 @@ urlpatterns = [
     path('api/toggle-status/<int:listing_id>/', views.toggle_listing_status_api, name='toggle_status_api'),
     
     # 4. Page Routes: To serve the actual HTML files
-    
+    path('view/<int:pk>/', views.listing_detail, name='detail'),
 ]

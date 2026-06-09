@@ -1,15 +1,30 @@
-from django.shortcuts import render
+from django.shortcuts import render, get_object_or_404
 from django.contrib.auth.decorators import login_required
 from django.views.decorators.http import require_POST
 from django.http import JsonResponse
 import json
-from django.http import JsonResponse
-from django.views.decorators.http import require_POST
-from django.contrib.auth.decorators import login_required
 from .models import Listing
-#from . import Listing
-# Create your views here.
 
+def listing_detail(request, pk):
+    """
+    Publicly accessible detail page for a listing.
+    Used for sharing previews (Open Graph).
+    """
+    listing = get_object_or_404(Listing, pk=pk)
+    
+    # Ensure image URL is absolute for social crawlers
+    image_url = listing.image_url
+    if image_url and not image_url.startswith('http'):
+        image_url = request.build_absolute_uri(image_url)
+    
+    context = {
+        'listing': listing,
+        'image_url': image_url,
+        'full_url': request.build_absolute_uri(),
+        'page_title': f"{listing.title} - PU-Connect",
+        'page_description': listing.description[:160] if listing.description else "Check out this listing on PU-Connect."
+    }
+    return render(request, 'listings/detail.html', context)
 
 @login_required(login_url='auth:auth_view')
 
