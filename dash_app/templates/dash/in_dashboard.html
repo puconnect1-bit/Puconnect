@@ -1,7 +1,8 @@
 <ul class="sbul">
     <li><a href="{% url 'base:home' %}">Home</a></li>
     <li><a href="{% url 'Dash_app:dashboard' %}" class="act">Dashboard</a></li>
-    <li><a href="{% url 'Dash_app:dashboard_services' %}">Services</a></li>
+    <li><a href="{% url 'Dash_app:dashboard' %}#products">Products</a></li>
+    <li><a href="{% url 'Dash_app:dashboard' %}#services">Services</a></li>
     {% if user.is_authenticated %}
     <li><a href="{% url 'listings:wishlist' %}">Wishlist</a></li>
     <li><a href="{% url 'listings:listings' %}">My Listings</a></li>

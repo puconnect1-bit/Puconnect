@@ -947,7 +947,7 @@ async function publish(){
         viewLink.href = 'listings.html';
         viewLink.textContent = 'Back to My Listings';
       } else {
-        viewLink.href = isService ? '{% url 'Dash_app:dashboard_products' %}#services' : '{% url 'Dash_app:dashboard_products' %}#products';
+        viewLink.href = isService ? '{% url "Dash_app:dashboard" %}#services' : '{% url "Dash_app:dashboard" %}#products';
         viewLink.textContent = isService ? 'View in Services' : 'View in Products';
       }
     }

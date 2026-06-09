@@ -23,41 +23,4 @@ def dashboard(request):
         # Add any additional context data needed for the dashboard here
     }
     return render(request, 'dash/dashboard.html', context)
-
-
-@login_required
-def dashboard_services(request):
-    """
-    Dashboard Services Page
-    GET /dashboard/services/
-    
-    Displays:
-    - Available services
-    - Service providers
-    - Service listings and details
-    """
-    context = {
-        'page_title': 'Services - PU-Marketplace',
-        'page_description': 'Browse and manage services on PU-Marketplace.',
-        # Add any additional context data needed for the services page here
-    }
-    return render(request, 'dash/dashboard-services.html', context)
-
-
-@login_required
-def dashboard_products(request):
-    """
-    Dashboard Products Page
-    GET /dashboard/products/
-    
-    Displays:
-    - Available products
-    - Product listings and details
-    """
-    context = {
-        'page_title': 'Products - PU-Marketplace',
-        'page_description': 'Browse and manage products on PU-Marketplace.',
-        # Add any additional context data needed for the products page here
-    }
-    return render(request, 'dash/dashboard-products.html', context)
     
