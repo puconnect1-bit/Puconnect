@@ -493,8 +493,40 @@ function openBoost(){
     const dy=e.changedTouches[0].clientY-sy;
     if(dy>80&&ldSh.scrollTop===0) closeLD();
   },{passive:true});
+  })();
 
-  /* Toast */
+  /* ── REAL-TIME NOTIFICATIONS ── */
+  {% if user.is_authenticated %}
+  (function(){
+  const wsScheme = window.location.protocol === "https:" ? "wss" : "ws";
+  const wsUrl = wsScheme + "://" + window.location.host + "/ws/notifications/";
+  const socket = new WebSocket(wsUrl);
+
+  socket.onmessage = function(e) {
+    const data = JSON.parse(e.data);
+    // Add to local notifs array
+    if (typeof notifs !== 'undefined') {
+      notifs.unshift({
+        id: data.id,
+        unread: true,
+        icon: "✉️",
+        bg: "rgba(232,201,106,.15)",
+        title: data.title,
+        desc: data.content,
+        time: data.created_at
+      });
+      if (typeof renderNotifs === 'function') renderNotifs();
+    }
+    if(window.ldToast) window.ldToast(data.title);
+  };
+
+  socket.onclose = function(e) {
+    console.error('Notification socket closed unexpectedly');
+  };
+  })();
+  {% endif %}
+  </script>
+
   window.ldToast = function(msg){
     let t=document.getElementById('ld-toast');
     if(!t){t=document.createElement('div');t.id='ld-toast';t.style.cssText='position:fixed;bottom:calc(var(--bh,78px)+18px);left:50%;transform:translateX(-50%) translateY(20px);background:var(--card);border:1px solid rgba(255,255,255,.1);border-radius:10px;padding:.6rem 1.2rem;font-size:.82rem;font-weight:500;color:var(--t);box-shadow:0 8px 32px rgba(0,0,0,.6);opacity:0;transition:opacity .3s,transform .3s;pointer-events:none;z-index:999;white-space:nowrap';document.body.appendChild(t);}

@@ -1,33 +1,33 @@
 <ul class="sbul">
-    <li><a href="{% url 'base:home' %}"><span class="ico">🏠</span>Home</a></li>
-    <li><a href="{% url 'Dash_app:dashboard' %}" class="act"><span class="ico">⚡</span>Dashboard</a></li>
-    <li><a href="{% url 'Dash_app:dashboard_services' %}"><span class="ico">🛠️</span>Services</a></li>
+    <li><a href="{% url 'base:home' %}">Home</a></li>
+    <li><a href="{% url 'Dash_app:dashboard' %}" class="act">Dashboard</a></li>
+    <li><a href="{% url 'Dash_app:dashboard_services' %}">Services</a></li>
     {% if user.is_authenticated %}
-    <li><a href="{% url 'listings:wishlist' %}"><span class="ico">❤️</span>Wishlist</a></li>
-    <li><a href="{% url 'listings:listings' %}"><span class="ico">🏷️</span>My Listings</a></li>
+    <li><a href="{% url 'listings:wishlist' %}">Wishlist</a></li>
+    <li><a href="{% url 'listings:listings' %}">My Listings</a></li>
     {% endif %}
     </ul>
     <div class="sbd"></div>
     <div class="sbsec">Account</div>
     <ul class="sbul">
     {% if user.is_authenticated %}
-    <li><a href="{% url 'profile:profile' %}"><span class="ico">👤</span>Profile</a></li>
+    <li><a href="{% url 'profile:profile' %}">Profile</a></li>
     {% else %}
-    <li><a href="{% url 'auth:auth_view' %}"><span class="ico">👤</span>Log In / Sign Up</a></li>
+    <li><a href="{% url 'auth:auth_view' %}">Log In / Sign Up</a></li>
     {% endif %}
     </ul>
     <div class="sbd"></div>
     <div class="sbsec">Info</div>
     <ul class="sbul">
-    <li><a href="{% url 'base:help' %}"><span class="ico">❓</span>Help Center</a></li>
-    <li><a href="{% url 'base:terms' %}"><span class="ico">📄</span>Terms of Service</a></li>
-    <li><a href="{% url 'base:privacy' %}"><span class="ico">🔒</span>Privacy Policy</a></li>
+    <li><a href="{% url 'base:help' %}">Help Center</a></li>
+    <li><a href="{% url 'base:terms' %}">Terms of Service</a></li>
+    <li><a href="{% url 'base:privacy' %}">Privacy Policy</a></li>
     </ul>
     <div class="sbd"></div>
     <ul class="sbul">
     {% if user.is_authenticated %}
-    <li><a href="{% url 'auth:auth_view' %}" style="color:var(--red)"><span class="ico">🚪</span>Log Out</a></li>
+    <li><a href="{% url 'auth:auth_view' %}" style="color:var(--red)">Log Out</a></li>
     {% else %}
-    <li><a href="{% url 'auth:auth_view' %}" style="color:var(--a)"><span class="ico">🔑</span>Get Started</a></li>
+    <li><a href="{% url 'auth:auth_view' %}" style="color:var(--a)">Get Started</a></li>
     {% endif %}
     </ul>

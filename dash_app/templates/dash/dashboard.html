@@ -839,7 +839,7 @@ window.addEventListener('focus', loadAllListings);
       time: data.created_at
     });
     renderNotifs();
-    showToast(data.title);
+    if(window.ldToast) window.ldToast(data.title);
   };
 
   socket.onclose = function(e) {

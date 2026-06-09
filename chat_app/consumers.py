@@ -2,7 +2,7 @@ import json
 from channels.generic.websocket import AsyncWebsocketConsumer
 from channels.db import database_sync_to_async
 from django.contrib.auth.models import User
-from .models import Conversation, Message
+from .models import Conversation, Message, Notification
 
 class ChatConsumer(AsyncWebsocketConsumer):
     async def connect(self):
@@ -46,8 +46,8 @@ class ChatConsumer(AsyncWebsocketConsumer):
                 print("Unauthorized attempt to send message")
                 return
 
-            # Save message to database
-            saved_msg = await self.save_message(
+            # Save message to database and get notifications data
+            result = await self.save_message_and_create_notifications(
                 user.id, 
                 data.get('message'), 
                 data.get('image_url'), 
@@ -55,6 +55,9 @@ class ChatConsumer(AsyncWebsocketConsumer):
                 data.get('meetup_spot'),
                 data.get('meetup_time')
             )
+            
+            saved_msg = result['message']
+            notifications = result['notifications']
 
             # Send message to room group
             await self.channel_layer.group_send(
@@ -71,6 +74,21 @@ class ChatConsumer(AsyncWebsocketConsumer):
                     'timestamp': saved_msg.timestamp.strftime("%I:%M %p")
                 }
             )
+
+            # Send real-time notifications to each recipient
+            for notif in notifications:
+                await self.channel_layer.group_send(
+                    f"user_{notif['user_id']}",
+                    {
+                        'type': 'notification_message',
+                        'data': {
+                            'id': notif['id'],
+                            'title': notif['title'],
+                            'content': notif['content'],
+                            'created_at': 'Just now'
+                        }
+                    }
+                )
         except Exception as e:
             print(f"Receive error: {e}")
 
@@ -89,12 +107,13 @@ class ChatConsumer(AsyncWebsocketConsumer):
         }))
 
     @database_sync_to_async
-    def save_message(self, sender_id, text, image_url, voice_url, meetup_spot, meetup_time):
+    def save_message_and_create_notifications(self, sender_id, text, image_url, voice_url, meetup_spot, meetup_time):
         user = User.objects.get(id=sender_id)
         conv = Conversation.objects.get(id=self.conv_id)
         # Update conversation timestamp so it moves to top of list
         conv.save() 
-        return Message.objects.create(
+        
+        msg = Message.objects.create(
             conversation=conv,
             sender=user,
             text=text,
@@ -103,3 +122,26 @@ class ChatConsumer(AsyncWebsocketConsumer):
             meetup_spot=meetup_spot,
             meetup_time=meetup_time
         )
+
+        notifications_data = []
+        content = text[:50] + "..." if text and len(text) > 50 else text or "Sent an attachment"
+        
+        for participant in conv.participants.exclude(id=sender_id):
+            notif = Notification.objects.create(
+                user=participant,
+                type='message',
+                title=f"New message from {user.username}",
+                content=content,
+                link=f"/chat/"
+            )
+            notifications_data.append({
+                'id': notif.id,
+                'user_id': participant.id,
+                'title': notif.title,
+                'content': notif.content
+            })
+            
+        return {
+            'message': msg,
+            'notifications': notifications_data
+        }
