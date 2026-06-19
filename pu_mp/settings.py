@@ -139,7 +139,7 @@ if DATABASE_URL:
         'default': dj_database_url.config(
             default=DATABASE_URL,
             conn_max_age=600,
-            ssl_require=True
+            ssl_require=False if DATABASE_URL.startswith('sqlite') else True
         )
     }
 else:
@@ -237,4 +237,11 @@ SOCIALACCOUNT_EMAIL_AUTHENTICATION_AUTO_CONNECT = True
 LOGIN_URL = 'auth:auth_view'
 LOGIN_REDIRECT_URL= 'Dash_app:dashboard'
 LOGOUT_REDIRECT_URL= 'auth:auth_view'
+
+# Web Push VAPID Settings
+VAPID_PUBLIC_KEY = os.environ.get('VAPID_PUBLIC_KEY', 'BGHIEjVoT9i6fafhvoN0RhQtG8O5Om8jneGhVzOX4wEsAC6-FeYOFKYUu8mLhBIf3VhVo-X6lzmUPopv3xNNkLk')
+VAPID_PRIVATE_KEY = os.environ.get('VAPID_PRIVATE_KEY', 'MIGHAgEAMBMGByqGSM49AgEGCCqGSM49AwEHBG0wawIBAQQgMkL8xcRCCo7tKbK3pLM4XduPHfXvapuF_VLq5eH0E_ShRANCAARhyBI1aE_Yun2n4b6DdEYULRvDuTpvI53hoVczl-MBLAAuvhXmDhSmFLvJi4QSH91YVaPl-pc5lD6Kb98TTZC5')
+VAPID_CLAIMS = {
+    'sub': os.environ.get('VAPID_EMAIL', 'mailto:admin@puconnect.com')
+}
 

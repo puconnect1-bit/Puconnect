@@ -37,3 +37,15 @@ def create_message_notification(sender, instance, created, **kwargs):
                         }
                     }
                 )
+            
+            # Send Web Push notification (for mobile/closed app notifications)
+            try:
+                from .utils import send_web_push
+                send_web_push(
+                    user=recipient,
+                    title=notification.title,
+                    message=notification.content,
+                    link=notification.link
+                )
+            except Exception as e:
+                print(f"Error triggering send_web_push: {e}")

@@ -10,4 +10,6 @@ urlpatterns = [
     path('api/start/', views.start_conversation, name='start_conversation'),
     path('api/notifications/', views.get_notifications, name='get_notifications'),
     path('api/notifications/read-all/', views.mark_notifications_read, name='mark_notifications_read'),
+    path('api/push-subscription/', views.save_push_subscription, name='save_push_subscription'),
+    path('api/vapid-public-key/', views.get_vapid_public_key, name='get_vapid_public_key'),
 ]

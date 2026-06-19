@@ -117,3 +117,34 @@ def mark_notifications_read(request):
     """Marks all notifications as read."""
     request.user.notifications.filter(is_read=False).update(is_read=True)
     return JsonResponse({'status': 'success'})
+
+@login_required
+@require_POST
+def save_push_subscription(request):
+    """Saves or updates a push notification subscription for the user."""
+    try:
+        from .models import PushSubscription
+        data = json.loads(request.body)
+        endpoint = data.get('endpoint')
+        auth = data.get('auth')
+        p256dh = data.get('p256dh')
+        
+        if not endpoint or not auth or not p256dh:
+            return JsonResponse({'status': 'error', 'message': 'Missing fields'}, status=400)
+            
+        subscription, created = PushSubscription.objects.update_or_create(
+            endpoint=endpoint,
+            defaults={
+                'user': request.user,
+                'auth': auth,
+                'p256dh': p256dh
+            }
+        )
+        return JsonResponse({'status': 'success'})
+    except Exception as e:
+        return JsonResponse({'status': 'error', 'message': str(e)}, status=400)
+
+def get_vapid_public_key(request):
+    """Exposes the VAPID public key for frontend subscription."""
+    from django.conf import settings
+    return JsonResponse({'public_key': settings.VAPID_PUBLIC_KEY})
