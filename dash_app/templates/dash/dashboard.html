@@ -405,7 +405,19 @@ function renderNotifs(){
   list.innerHTML=notifs.map(n=>`<div class="nitem${n.unread?' unread':''}" onclick="markRead(${n.id})"><div class="nico2" style="background:${n.bg}">${n.icon}</div><div class="ntxt"><div class="ntitle2">${n.title}</div><div class="ndesc">${n.desc}</div></div><div class="ntime">${n.time}</div></div>`).join('');
 }
 function markRead(id){const n=notifs.find(x=>x.id===id);if(n){n.unread=false;renderNotifs();}}
-function markAllRead(){notifs.forEach(n=>n.unread=false);renderNotifs();}
+async function markAllRead(){
+  notifs.forEach(n=>n.unread=false);
+  renderNotifs();
+  try {
+    const csrfToken = document.cookie.split('; ').find(row => row.startsWith('csrftoken='))?.split('=')[1];
+    await fetch('/chat/api/notifications/read-all/', {
+      method: 'POST',
+      headers: {
+        'X-CSRFToken': csrfToken
+      }
+    });
+  } catch(e) { console.error('Failed to mark all notifications as read', e); }
+}
 
 async function fetchNotifs() {
   try {
@@ -428,16 +440,22 @@ const markAllBtn = document.getElementById('markAllBtn');
 if(markAllBtn) markAllBtn.onclick=function(e){e.stopPropagation();markAllRead();};
 const NP=document.getElementById('npanel');
 const NOTIBTN=document.getElementById('notibtn');
-let _notifJustOpened=false;
 if(NOTIBTN){
-  NOTIBTN.onclick=function(){
-    NP.classList.toggle('open');
-    _notifJustOpened=true;
+  NOTIBTN.onclick=function(e){
+    e.stopPropagation();
+    const isOpen = NP.classList.toggle('open');
+    if(isOpen) {
+      fetchNotifs();
+    }
+  };
+}
+if(NP){
+  NP.onclick=function(e){
+    e.stopPropagation();
   };
 }
 document.addEventListener('click',function(){
-  if(_notifJustOpened){_notifJustOpened=false;return;}
-  NP.classList.remove('open');
+  if(NP) NP.classList.remove('open');
 });
 renderNotifs();
 function openBoost(){
