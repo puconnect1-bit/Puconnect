@@ -716,8 +716,8 @@ window.addEventListener('focus', loadAllListings);
   /* Open */
   window.openListingDetail = function(id){
     const local = JSON.parse(localStorage.getItem('pu-listings')||'[]');
-    // Search both local and fetched listings, use == for string/number flexibility
-    const l = local.find(x => x.id == id) || _fetchedListings.find(x => x.id == id);
+    // Search both fetched and local listings, use == for string/number flexibility
+    const l = _fetchedListings.find(x => x.id == id) || local.find(x => x.id == id);
     if(!l) return;
     curId = id;
 

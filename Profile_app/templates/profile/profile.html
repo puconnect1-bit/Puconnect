@@ -170,6 +170,13 @@
       </div>
     </div>
     <div class="info-card">
+      <span class="info-icon">📞</span>
+      <div>
+        <div class="info-label">Phone</div>
+        <div class="info-val" id="infoPhone">—</div>
+      </div>
+    </div>
+    <div class="info-card">
       <span class="info-icon">📅</span>
       <div>
         <div class="info-label">Member Since</div>
@@ -243,6 +250,10 @@
       <input type="text" id="editUsername" placeholder="@username" maxlength="30" oninput="this.value=this.value.replace(/[^a-zA-Z0-9._]/g,'')"/>
     </div>
     <div class="field">
+      <label class="field-lbl">Phone Number</label>
+      <input type="text" id="editPhone" placeholder="e.g. 0241234567" maxlength="15"/>
+    </div>
+    <div class="field">
       <label class="field-lbl">Bio <span class="opt">(optional)</span></label>
       <textarea id="editBio" maxlength="200" placeholder="Tell buyers about yourself…" oninput="document.getElementById('bioCount').textContent=this.value.length+' / 200'"></textarea>
       <div style="text-align:right;font-size:.68rem;color:var(--m);margin-top:.2rem" id="bioCount">0 / 200</div>
@@ -313,6 +324,8 @@ function applyProfile(p){
   document.getElementById('dispBio').textContent=p.bio||'No bio added yet.';
   document.getElementById('infoFaculty').textContent=p.faculty||'—';
   document.getElementById('infoLocation').textContent=p.location||'—';
+  const infoPh = document.getElementById('infoPhone');
+  if(infoPh) infoPh.textContent = p.phone || '—';
   
   const ini=initials(name);
   ['avatarInitials','modalAvatarInitials'].forEach(id=>{const el=document.getElementById(id);if(el)el.textContent=ini;});
@@ -346,6 +359,7 @@ function openEditModal(){
   const p=loadLocalProfile();
   document.getElementById('editName').value=p.name;
   document.getElementById('editUsername').value=p.username;
+  document.getElementById('editPhone').value=p.phone||'';
   document.getElementById('editBio').value=p.bio;
   document.getElementById('editFaculty').value=p.faculty||'';
   document.getElementById('editLocation').value=p.location||'';
@@ -357,10 +371,11 @@ function closeEditModal(){document.getElementById('editModal').classList.remove(
 async function saveProfile(){
   const name=document.getElementById('editName').value.trim();
   const username=document.getElementById('editUsername').value.trim().replace(/^@/,'');
+  const phone=document.getElementById('editPhone').value.trim();
   if(!name||!username){showToast('Name and Username required');return;}
   
   const payload={
-    name,username,
+    name,username,phone,
     bio:document.getElementById('editBio').value.trim(),
     faculty:document.getElementById('editFaculty').value,
     location:document.getElementById('editLocation').value,
