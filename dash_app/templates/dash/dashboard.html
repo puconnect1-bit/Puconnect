@@ -289,6 +289,21 @@ const MV=document.getElementById('mv');
 function openMod(){MV.classList.add('on');document.body.style.overflow='hidden'}
 function closeMod(){MV.classList.remove('on');document.body.style.overflow=''}
 MV.onclick=e=>{if(e.target===MV)closeMod()};
+function getPriceLabel(l){
+  if(l.contactForPrice || (l.price != null && Number(l.price) === 0)){
+    return 'Contact Buyer for Price';
+  }
+  if(l.priceLabel){
+    if(['Contact for Price', 'Contact', 'Contact Buyer'].includes(l.priceLabel)){
+      return 'Contact Buyer for Price';
+    }
+    return l.priceLabel;
+  }
+  if(l.price != null && l.price !== ''){
+    return 'GH₵ ' + Number(l.price).toLocaleString() + (l.negotiable ? ' (Negotiable)' : '');
+  }
+  return 'Contact Buyer for Price';
+}
 function renderDiscoverySlider(all){
   const ft = document.getElementById('ft');
   if(!ft || !all.length) return;
@@ -301,7 +316,7 @@ function renderDiscoverySlider(all){
     const isSvc = l.type === 'service';
     const typeClr = isSvc ? '#5be5c5' : 'var(--a)';
     const typeBg = isSvc ? 'rgba(91,229,197,.14)' : 'rgba(232,201,106,.14)';
-    const price = (l.contactForPrice || (l.price != null && Number(l.price) === 0)) ? 'Contact Buyer' : (l.priceLabel || (l.price != null ? 'GH₵ '+Number(l.price).toLocaleString() : ''));
+    const price = getPriceLabel(l);
     
     return `<div class="fsl" onclick="openListingDetail('${l.id}')" style="cursor:pointer">
       <div class="fsi">
@@ -398,7 +413,7 @@ function openDr(id){
     const catProviders=all.filter(l=>l.cat===s.cat||l.type==='service');
     document.getElementById('dsb').textContent=catProviders.length?catProviders.length+' provider'+(catProviders.length!==1?'s':'')+' on campus':'No providers yet';
     document.getElementById('dg').innerHTML=catProviders.length
-      ?catProviders.slice(0,6).map(l=>`<div class="di" onclick="closeDr();openListingDetail('${l.id}')" style="cursor:pointer"><div class="dth">${l.img?`<img src="${l.img}" alt="" loading="lazy"/>`:'<div style="width:100%;height:100%;background:var(--inp);display:flex;align-items:center;justify-content:center;font-size:1.4rem">'+s.icon+'</div>'}</div><div><div class="din">${(l.title||l.name||'').substring(0,30)}</div><div class="dip">${(l.contactForPrice || (l.price != null && Number(l.price) === 0)) ? 'Contact Buyer' : (l.priceLabel || (l.price ? 'GH₵ '+Number(l.price).toLocaleString() : 'Contact Buyer'))}</div><div class="dir">@${l.sellerUsername||l.seller||''}</div></div></div>`).join('')
+      ?catProviders.slice(0,6).map(l=>`<div class="di" onclick="closeDr();openListingDetail('${l.id}')" style="cursor:pointer"><div class="dth">${l.img?`<img src="${l.img}" alt="" loading="lazy"/>`:'<div style="width:100%;height:100%;background:var(--inp);display:flex;align-items:center;justify-content:center;font-size:1.4rem">'+s.icon+'</div>'}</div><div><div class="din">${(l.title||l.name||'').substring(0,30)}</div><div class="dip">${getPriceLabel(l)}</div><div class="dir">@${l.sellerUsername||l.seller||''}</div></div></div>`).join('')
       :`<div style="grid-column:1/-1;padding:1rem;color:var(--m);font-size:.83rem;text-align:center">No services posted yet in this category.<br><button onclick="closeDr();location.href='{% url 'listings:create' %}?type=service'" style="margin-top:.6rem;background:var(--a2);color:#0d0e11;border:none;border-radius:8px;padding:.45rem 1rem;font-family:'DM Sans',sans-serif;font-size:.78rem;font-weight:700;cursor:pointer">+ Post a Service</button></div>`;
   }catch(e){document.getElementById('dg').innerHTML='';}
   DR.classList.add('on');document.body.style.overflow='hidden';
@@ -501,8 +516,7 @@ function _cardHTML(l){
   const isSvc   = l.type === 'service';
   const typeClr = isSvc ? '#5be5c5' : 'var(--a)';
   const typeBg  = isSvc ? 'rgba(91,229,197,.14)' : 'rgba(232,201,106,.14)';
-  const price   = (l.contactForPrice || (l.price != null && Number(l.price) === 0)) ? 'Contact Buyer'
-    : (l.priceLabel || (l.price != null ? 'GH\u20B5 '+Number(l.price).toLocaleString() : ''));
+  const price   = getPriceLabel(l);
   const isSaved  = _wishSet.has(l.id);
   const catLabel = l.category || l.cat || (isSvc ? 'Service' : 'Product');
   const isSold   = l.status === 'sold';
@@ -658,13 +672,7 @@ window.addEventListener('focus', loadAllListings);
   function escH(s){return String(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');}
 
   function fmtPrice(l){
-    if(l.contactForPrice || (l.price != null && Number(l.price) === 0))return 'Contact Buyer';
-    if(l.priceLabel) {
-      if(l.priceLabel === 'Contact for Price' || l.priceLabel === 'Contact') return 'Contact Buyer';
-      return l.priceLabel;
-    }
-    if(l.price!=null&&l.price!=='')return 'GH₵ '+Number(l.price).toLocaleString()+(l.negotiable?' (Negotiable)':'');
-    return '—';
+    return getPriceLabel(l) || '—';
   }
 
   function timeAgo(ts){
