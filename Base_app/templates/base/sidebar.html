@@ -11,10 +11,7 @@
     <li><a href="{% url 'listings:wishlist' %}" {% if active_page == 'wishlist' %}class="act"{% endif %}><span class="ico"></span>Wishlist</a></li>
     <li><a href="{% url 'listings:listings' %}" {% if active_page == 'listings' %}class="act"{% endif %}><span class="ico"></span>My Listings</a></li>
     {% endif %}
-    <li><a href="{% url 'base:home' %}" {% if active_page == 'home' %}class="act"{% endif %}><span class="ico"></span>Home</a></li>
-    <li><a href="{% url 'search:search' %}" {% if active_page == 'search' %}class="act"{% endif %}><span class="ico"></span>Search</a></li>
-    <li><a href="{% url 'Dash_app:dashboard' %}#products"><span class="ico"></span>Products</a></li>
-    <li><a href="{% url 'Dash_app:dashboard' %}#services"><span class="ico"></span>Services</a></li>
+
   </ul>
 
   <div class="sbd"></div>
