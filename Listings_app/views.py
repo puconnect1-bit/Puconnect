@@ -2,6 +2,7 @@ from django.shortcuts import render, get_object_or_404
 from django.contrib.auth.decorators import login_required
 from django.views.decorators.http import require_POST
 from django.http import JsonResponse
+from django.views.decorators.cache import never_cache
 import json
 from .models import Listing
 
@@ -169,6 +170,7 @@ def get_my_listings(request):
         })
     return JsonResponse({'listings': listings_data})
 
+@never_cache
 def get_all_listings(request):
     """
     Fetches all available listings to display on the dashboard.

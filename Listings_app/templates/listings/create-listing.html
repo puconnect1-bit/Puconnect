@@ -780,7 +780,7 @@ function buildReview(){
   const nm=document.getElementById('sname').value.trim();
   const ph=document.getElementById('phone').value.trim();
   const subcatVal=document.getElementById('subcat').value;
-  const priceStr=ctaV?'Contact for Price':(price?(negV?`GH₵ ${parseFloat(price).toLocaleString()} (Negotiable)`:`GH₵ ${parseFloat(price).toLocaleString()}`):'—');
+  const priceStr=ctaV?'Contact Buyer':(price?(negV?`GH₵ ${parseFloat(price).toLocaleString()} (Negotiable)`:`GH₵ ${parseFloat(price).toLocaleString()}`):'—');
   const catFull=catV+(subcatVal?` › ${subcatVal}`:'');
 
   const infoRows=[
@@ -891,7 +891,7 @@ async function publish(){
       condition:cgV==='Products'?condV:'',
       availability:availV,
       price:ctaV?null:parseFloat(priceRaw)||0,
-      priceLabel:ctaV?'Contact for Price':(priceRaw?(negV?`GH₵ ${parseFloat(priceRaw).toLocaleString()} (Negotiable)`:`GH₵ ${parseFloat(priceRaw).toLocaleString()}`):''),
+      priceLabel:ctaV?'Contact Buyer':(priceRaw?(negV?`GH₵ ${parseFloat(priceRaw).toLocaleString()} (Negotiable)`:`GH₵ ${parseFloat(priceRaw).toLocaleString()}`):''),
       negotiable:negV,
       contactForPrice:ctaV,
       description:desc,

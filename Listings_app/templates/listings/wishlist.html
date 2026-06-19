@@ -87,8 +87,11 @@ window.addEventListener('resize', function() {
   return String(s || '').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
 }
 function fmtPrice(l) {
-  if (l.contactForPrice) return 'Contact for Price';
-  if (l.priceLabel) return l.priceLabel;
+  if (l.contactForPrice || (l.price != null && Number(l.price) === 0)) return 'Contact Buyer';
+  if (l.priceLabel) {
+    if (l.priceLabel === 'Contact for Price' || l.priceLabel === 'Contact') return 'Contact Buyer';
+    return l.priceLabel;
+  }
   if (l.price != null && l.price !== '') {
     return 'GH\u20B5\u00A0' + Number(l.price).toLocaleString() + (l.negotiable ? ' (Neg.)' : '');
   }

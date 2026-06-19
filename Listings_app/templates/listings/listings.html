@@ -232,7 +232,7 @@ function renderListings(){
     const typeClr=isService?'#5be5c5':'var(--a)';
     const typeBg=isService?'rgba(91,229,197,.12)':'rgba(232,201,106,.12)';
     const typeLbl=isService?'Service':'Product';
-    const priceDisplay='GH₵ '+(parseFloat(l.price)||0).toLocaleString();
+    const priceDisplay = (l.contactForPrice || (l.price != null && Number(l.price) === 0)) ? 'Contact Buyer' : 'GH₵ '+(parseFloat(l.price)||0).toLocaleString();
     const statusKey=l.status||'active';
     const dateStr=l.date||'—';
     const thumb=l.img||'';
@@ -289,7 +289,7 @@ function openListingDetail(id){
   if(!l)return;
   
   document.getElementById('ldTitle').textContent = l.title;
-  document.getElementById('ldPrice').textContent = 'GH₵ ' + (parseFloat(l.price)||0).toLocaleString();
+  document.getElementById('ldPrice').textContent = (l.contactForPrice || (l.price != null && Number(l.price) === 0)) ? 'Contact Buyer' : 'GH₵ ' + (parseFloat(l.price)||0).toLocaleString();
   document.getElementById('ldDesc').textContent = l.description || 'No description provided.';
   document.getElementById('ldDescWrap').style.display = l.description ? 'block' : 'none';
   
