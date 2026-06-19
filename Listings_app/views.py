@@ -114,6 +114,14 @@ def create_listing_api(request):
         if not title or price is None or not image_url:
             return JsonResponse({'status': 'error', 'message': 'Missing required fields'}, status=400)
 
+        # Update user's profile with phone number if provided
+        phone = data.get('phone')
+        if phone:
+            from Profile_app.models import Profile
+            profile, created = Profile.objects.get_or_create(user=request.user)
+            profile.phone = phone
+            profile.save()
+
         # Create the database entry
         new_listing = Listing.objects.create(
             user=request.user,
@@ -169,6 +177,13 @@ def get_all_listings(request):
     listings = Listing.objects.filter(status__in=['active', 'boosted']).order_by('-created_at')
     listings_data = []
     for item in listings:
+        phone = ""
+        try:
+            if hasattr(item.user, 'profile') and item.user.profile.phone:
+                phone = item.user.profile.phone
+        except Exception:
+            pass
+            
         listings_data.append({
             'id': item.id,
             'title': item.title,
@@ -182,6 +197,7 @@ def get_all_listings(request):
             'condition': item.condition,
             'seller': item.user.get_full_name() or item.user.username,
             'sellerUsername': item.user.username,
+            'phone': phone,
             'status': item.status,
             'postedAt': int(item.created_at.timestamp() * 1000)
         })
