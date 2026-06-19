@@ -84,15 +84,7 @@
 </head>
 <body>
 <div class="ov" id="ov" onclick="closeSb()"></div>
-<aside class="sb" id="sb">
-  <div class="sbh">
-    <div class="sbl">PU-<span>Marketplace</span></div>
-    <button class="sbx" onclick="closeSb()">✕</button>
-  </div>
-  <div class="sbsec">Navigate</div>
-    {% include 'dash/in_dashboard.html' %}
-  <div class="sbft">© 2026 PU-Connect<br>Built for campus, by students.</div>
-</aside>
+{% include 'base/sidebar.html' with active_page='dashboard' %}
 <nav class="tnav">
   <button class="hbg" id="hbg"><span></span><span></span><span></span></button>
   <div class="tabs">

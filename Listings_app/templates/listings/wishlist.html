@@ -11,48 +11,14 @@
 </head>
 <body>
 
-<div class="ov" id="ov" onclick="closeSb()"></div>
-<aside class="sb" id="sb">
-  <div class="sbh">
-    <div class="sbl">PU-<span>Connect</span></div>
-    <button class="sbx" onclick="closeSb()">&#x2715;</button>
-  </div>
-  <div class="sbsec">Navigate</div>
-  <ul class="sbul">
-    <li><a href="{% url 'base:home' %}"><span class="ico"></span>Home</a></li>
-    <li><a href="{% url 'Dash_app:dashboard' %}"><span class="ico"></span>Dashboard</a></li>
-    <li><a href="{% url 'Dash_app:dashboard' %}#products"><span class="ico"></span>Products</a></li>
-    <li><a href="{% url 'Dash_app:dashboard' %}#services"><span class="ico"></span>Services</a></li>
-    <li><a href="{% url 'listings:wishlist' %}" class="act"><span class="ico"></span>Wishlist</a></li>
-    <li><a href="{% url 'listings:listings' %}"><span class="ico"></span>My Listings</a></li>
-    <li><a href="{% url 'search:search' %}"><span class="ico"></span>Search</a></li>
-  </ul>
-  <div class="sbd"></div>
-  <div class="sbsec">Account</div>
-  <ul class="sbul">
-    <li><a href="{% url 'profile:profile' %}"><span class="ico"></span>Profile</a></li>
-  </ul>
-  <div class="sbd"></div>
-  <div class="sbsec">Info</div>
-  <ul class="sbul">
-    <li><a href="{% url 'base:about' %}"><span class="ico"></span>About Us</a></li>
-    <li><a href="{% url 'base:safety' %}"><span class="ico"></span>Safety</a></li>
-    <li><a href="{% url 'base:help' %}"><span class="ico"></span>Help Centre</a></li>
-    <li><a href="{% url 'base:privacy' %}"><span class="ico"></span>Privacy</a></li>
-    <li><a href="{% url 'base:terms' %}"><span class="ico"></span>Terms</a></li>
-  </ul>
-  <div class="sbd"></div>
-  <ul class="sbul">
-    <li><a href="{% url 'auth:auth_view' %}" style="color:var(--red)"><span class="ico"></span>Log Out</a></li>
-  </ul>
-  <div class="sbft">&#169; 2026 PU-Connect<br>Built for campus, by students.</div>
-</aside>
-
 <nav class="tnav">
   <button class="hbg" id="hbg"><span></span><span></span><span></span></button>
-  <div class="nav-title">&#x2764;&#xFE0F; Wishlist</div>
+  <div class="nav-title">Wishlist</div>
   <button class="thbtn" id="thbtn">🌞</button>
 </nav>
+
+<div class="ov" id="ov" onclick="closeSb()"></div>
+{% include 'base/sidebar.html' with active_page='wishlist' %}
 
 <div class="wrap">
 <div class="inner">

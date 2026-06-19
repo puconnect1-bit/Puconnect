@@ -29,7 +29,7 @@
 <body>
 <nav class="tnav">
   <button class="hbg" id="hbg"><span></span><span></span><span></span></button>
-  <div class="nav-title">🏷️ My Listings</div>
+  <div class="nav-title">My Listings</div>
   <button class="notibtn" onclick="location.href='{% url 'Dash_app:dashboard' %}'" title="Notifications">
     <svg viewBox="0 0 24 24"><path d="M18 8A6 6 0 006 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 01-3.46 0"/></svg>
     <span class="nbadge" id="notifBadge" style="display:none"></span>
@@ -37,36 +37,7 @@
   <button class="thbtn" id="thbtn">🌞</button>
 </nav>
 <div class="ov" id="ov" onclick="closeSb()"></div>
-<aside class="sb" id="sb">
-  <div class="sbh"><div class="sbl">PU-<span>Connect</span></div><button class="sbx" onclick="closeSb()">✕</button></div>
-  <div class="sbsec">Navigate</div>
-  <ul class="sbul">
-    <li><a href="{% url 'base:home' %}"><span class="ico"></span>Home</a></li>
-    <li><a href="{% url 'Dash_app:dashboard' %}"><span class="ico"></span>Dashboard</a></li>
-    <li><a href="{% url 'search:search' %}"><span class="ico"></span>Search</a></li>
-    <li><a href="{% url 'Dash_app:dashboard' %}#products"><span class="ico"></span>Products</a></li>
-    <li><a href="{% url 'Dash_app:dashboard' %}#services"><span class="ico"></span>Services</a></li>
-    <li><a href="{% url 'listings:wishlist' %}"><span class="ico"></span>Wishlist</a></li>
-    <li><a href="{% url 'listings:listings' %}" class="act"><span class="ico"></span>My Listings</a></li>
-  </ul>
-  <div class="sbd"></div>
-  <div class="sbsec">Account</div>
-  <ul class="sbul">
-    <li><a href="{% url 'profile:profile' %}"><span class="ico"></span>Profile</a></li>
-  </ul>
-  <div class="sbd"></div>
-  <div class="sbsec">Info &amp; Legal</div>
-  <ul class="sbul">
-    <li><a href="{% url 'base:about' %}"><span class="ico"></span>About Us</a></li>
-    <li><a href="{% url 'base:safety' %}"><span class="ico"></span>Safety</a></li>
-    <li><a href="{% url 'base:help' %}"><span class="ico"></span>Help Centre</a></li>
-    <li><a href="{% url 'base:privacy' %}"><span class="ico"></span>Privacy Policy</a></li>
-    <li><a href="{% url 'base:terms' %}"><span class="ico"></span>Terms &amp; Conditions</a></li>
-  </ul>
-  <div class="sbd"></div>
-  <ul class="sbul"><li><a href="{% url 'auth:auth_view' %}" style="color:var(--red)"><span class="ico"></span>Log Out</a></li></ul>
-  <div class="sbft">© 2026 PU-Connect</div>
-</aside>
+{% include 'base/sidebar.html' with active_page='listings' %}
 <div class="wrap"><div class="inner">
   <div class="ph">
     <div class="ph-left">
