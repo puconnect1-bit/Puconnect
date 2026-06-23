@@ -14,7 +14,7 @@
     <svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/></svg>
     <span class="nlbl">{% if user.is_authenticated %}Chat{% else %}Login{% endif %}</span>
   </button>
-  <button class="ni {% if 'profile' in request.path %}on{% endif %}" onclick="setNi(this);location.href='{% if user.is_authenticated %}{% url 'profile:profile' %}{% else %}{% url 'auth:auth_view' %}{% endif %}'">
+  <button class="ni {% if 'profile' in request.path %}on{% endif %}" onclick="setNi(this);location.href='{% if user.is_authenticated %}{% url 'Dash_app:dashboard' %}{% else %}{% url 'auth:auth_view' %}{% endif %}'">
     <svg viewBox="0 0 24 24"><path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
     <span class="nlbl">{% if user.is_authenticated %}Profile{% else %}Account{% endif %}</span>
   </button>

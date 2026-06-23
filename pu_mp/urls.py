@@ -27,7 +27,7 @@ urlpatterns = [
     # Main apps
     path('dashboard/', include('dash_app.urls')),
     path('listings/', include('Listings_app.urls')),
-    path('profile/', include('Profile_app.urls')),
+    # path('profile/', include('Profile_app.urls')),
     path('chat/', include('chat_app.urls')),
     path('search/', include('search_app.urls')),
     path("accounts/", include("allauth.urls")),# Include allauth URLs for social authentication

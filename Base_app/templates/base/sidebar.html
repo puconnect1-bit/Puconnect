@@ -18,7 +18,7 @@
   <div class="sbsec">Account</div>
   <ul class="sbul">
     {% if user.is_authenticated %}
-    <li><a href="{% url 'profile:profile' %}" {% if active_page == 'profile' %}class="act"{% endif %}><span class="ico"></span>Profile</a></li>
+    <li><a href="{% url 'Dash_app:dashboard' %}" {% if active_page == 'profile' %}class="act"{% endif %}><span class="ico"></span>Profile</a></li>
     {% else %}
     <li><a href="{% url 'auth:auth_view' %}"><span class="ico"></span>Log In / Sign Up</a></li>
     {% endif %}

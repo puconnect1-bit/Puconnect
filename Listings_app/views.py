@@ -118,10 +118,13 @@ def create_listing_api(request):
         # Update user's profile with phone number if provided
         phone = data.get('phone')
         if phone:
-            from Profile_app.models import Profile
-            profile, created = Profile.objects.get_or_create(user=request.user)
-            profile.phone = phone
-            profile.save()
+            try:
+                from Profile_app.models import Profile
+                profile, created = Profile.objects.get_or_create(user=request.user)
+                profile.phone = phone
+                profile.save()
+            except ImportError:
+                pass
 
         # Create the database entry
         new_listing = Listing.objects.create(

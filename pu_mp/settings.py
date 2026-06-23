@@ -53,7 +53,7 @@ INSTALLED_APPS = [
     'Auth_app',
     'dash_app',
     'Base_app',
-    'Profile_app',
+    # 'Profile_app',
     'search_app',
     'chat_app',
     'Listings_app',
@@ -200,7 +200,7 @@ STATICFILES_DIRS = [
     BASE_DIR / "Base_app" / "static",
     BASE_DIR / "dash_app" / "static",
     BASE_DIR / "Listings_app" / "static",
-    BASE_DIR / "Profile_app" / "static",
+    # BASE_DIR / "Profile_app" / "static",
     BASE_DIR / "search_app" / "static",
 ]
 STATIC_ROOT = BASE_DIR / "staticfiles"
