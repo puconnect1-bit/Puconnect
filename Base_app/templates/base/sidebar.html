@@ -37,7 +37,7 @@
   <div class="sbd"></div>
   <ul class="sbul">
     {% if user.is_authenticated %}
-    <li><a href="{% url 'auth:auth_view' %}" style="color:var(--red)"><span class="ico"></span>Log Out</a></li>
+    <li><a href="{% url 'auth:logout' %}" style="color:var(--red)"><span class="ico"></span>Log Out</a></li>
     {% else %}
     <li><a href="{% url 'auth:auth_view' %}" style="color:var(--a)"><span class="ico"></span>Get Started</a></li>
     {% endif %}

@@ -1,9 +1,9 @@
 import json
-from django.contrib.auth import authenticate, login 
+from django.contrib.auth import authenticate, login, logout
 from django.http import JsonResponse
 from django.views.decorators.csrf import ensure_csrf_cookie
 from django.views.decorators.http import require_POST
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 
 from django.contrib.auth.models import User
 
@@ -133,6 +133,10 @@ def login_page(request):
 
 
 # Additional views for registration, password reset, etc. can be added here as needed.
+
+def logout_view(request):
+    logout(request)
+    return redirect('auth:auth_view')
 
 @ensure_csrf_cookie
 def Auth_view(request):

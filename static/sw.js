@@ -1,7 +1,5 @@
-const CACHE_NAME = 'pu-market-v1';
+const CACHE_NAME = 'pu-market-v2';
 const urlsToCache = [
-  '/',
-  '/dashboard/dashboard/',
   '/static/dash_app/css/dashboard.css'
 ];
 
@@ -10,6 +8,10 @@ self.addEventListener('install', event => {
 });
 
 self.addEventListener('fetch', event => {
+  if (event.request.mode === 'navigate') {
+    event.respondWith(fetch(event.request).catch(() => caches.match(event.request)));
+    return;
+  }
   event.respondWith(caches.match(event.request).then(response => response || fetch(event.request)));
 });
 
